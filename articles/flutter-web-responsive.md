@@ -4,6 +4,7 @@ emoji: "🐡"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: []
 published: false
+publication_name: "altiveinc"
 ---
 
 `LayoutBuilder` を使用することで、制約を取得することができる。

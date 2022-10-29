@@ -4,6 +4,7 @@ emoji: "🤖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [googlecloudplatform,googleplayconsole]
 published: true
+publication_name: "altiveinc"
 ---
 
 今回、「RevenueCat」というアプリ内課金サービスで使用するために Google Cloud のサービスアカウントが必要だったのですが、いつも忘れてしまったり、合っているか不安になってしまうので作り方、権限の与え方を書き残します✍️

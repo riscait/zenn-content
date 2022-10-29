@@ -4,6 +4,7 @@ emoji: "🔨"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [flutter, flavor]
 published: true
+publication_name: "altiveinc"
 ---
 :::message
 2021年11月19日

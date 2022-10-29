@@ -4,6 +4,7 @@ emoji: "🐿"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: [firebase]
 published: true
+publication_name: "altiveinc"
 ---
 
 こんにちは、 村松龍之介[@Riscait](https://twitter.com/riscait) です。

@@ -4,6 +4,7 @@ emoji: "🌓"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [flutter, dart, riverpod, theme, StateNotifiler]
 published: true
+publication_name: "altiveinc"
 ---
 :::message
 12月22日(火)更新

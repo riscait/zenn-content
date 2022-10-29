@@ -4,6 +4,7 @@ emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["UIKit", "Swift"]
 published: false
+publication_name: "altiveinc"
 ---
 
 ## Facebook for Developers

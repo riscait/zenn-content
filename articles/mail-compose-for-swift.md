@@ -4,6 +4,7 @@ emoji: "📧"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Swift"]
 published: true
+publication_name: "altiveinc"
 ---
 「アプリ内でメーラーを立ち上げて、ユーザー情報とともにサポートへ送信してもらう」
 よくある実装だと思うのですが、久しぶりにメールを作成する処理の実装を行ったので備忘録として書き残しておきます。

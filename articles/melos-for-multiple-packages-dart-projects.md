@@ -4,6 +4,7 @@ emoji: "🌋"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [melos, dart, flutter, cli]
 published: true
+publication_name: "altiveinc"
 ---
 
 こんにちは、Altive株式会社のFlutterアプリ開発者、村松龍之介（[@riscait](https://twitter.com/riscait)）です😸

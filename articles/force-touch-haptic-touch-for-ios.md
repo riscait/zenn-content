@@ -4,6 +4,7 @@ emoji: "☝️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["UIKit", "Swift"]
 published: true
+publication_name: "altiveinc"
 ---
 こんにちは、[村松龍之介@Riscait](https://twitter.com/riscait)です。
 

@@ -4,6 +4,7 @@ emoji: "🔨"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [xcode, xcodegen, ios, widgetkit]
 published: true
+publication_name: "altiveinc"
 ---
 
 2020年10月25日：Intents Extension を追加した場合のTarget, Schemeを追記しました！

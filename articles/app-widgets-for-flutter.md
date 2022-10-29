@@ -4,6 +4,7 @@ emoji: "🦢"
 type: "tech"
 topics: ["flutter"]
 published: false
+publication_name: "altiveinc"
 ---
 こんにちは、[村松龍之介@Riscait](https://twitter.com/riscait)です。
 

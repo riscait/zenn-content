@@ -4,6 +4,7 @@ emoji: "💬"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [flutter, dart]
 published: false
+publication_name: "altiveinc"
 ---
 
 ### 関数（メソッド）内の変数を、型を明示して宣言している。

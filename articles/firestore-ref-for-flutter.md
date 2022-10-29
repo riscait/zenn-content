@@ -4,6 +4,7 @@ emoji: "🐈"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: []
 published: false
+publication_name: "altiveinc"
 ---
 
 [pub.dev](https://pub.dev/packages/firestore_ref)

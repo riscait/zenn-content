@@ -4,6 +4,7 @@ emoji: "🔪"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [dart, flutter]
 published: true
+publication_name: "altiveinc"
 ---
 
 こんにちは！Altive株式会社でFlutterアプリ開発を行なっている村松龍之介([@riscait](https://twitter.com/riscait))です😸

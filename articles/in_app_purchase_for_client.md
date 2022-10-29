@@ -4,6 +4,7 @@ emoji: "🍣"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: []
 published: false
+publication_name: "altiveinc"
 ---
 
 ## 実装には2つの方法がある

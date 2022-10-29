@@ -4,6 +4,7 @@ emoji: "🐡"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: []
 published: false
+publication_name: "altiveinc"
 ---
 
 [Use a custom font - Flutter.dev](https://flutter.dev/docs/cookbook/design/fonts)
