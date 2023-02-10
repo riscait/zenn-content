@@ -7,6 +7,17 @@ published: true
 publication_name: "altiveinc"
 ---
 :::message
+2023年2月10日
+- Flutter 3.7にて、 Dart-definesをファイルにまとめて定義できるようになりました
+また、iOSやAndroidへ定義を個別に渡す必要がなくなり、スクリプト等が不要になりました！
+より簡単に環境が分けられるようになったため、これから環境分けを行う場合は `--dart-define-from-file` の使用をお勧めします！
+
+この記事を書き直すにはまだ時間がかかりそうなので、
+詳しくは `--dart-define` から `--dart-define-from-file` へ移行した以下のプルリクエスト（ファイル差分）を参考にしてください🙏
+https://github.com/altive/flutter_app_template/pull/164/files
+:::
+
+:::message
 2021年11月19日
 - Android Studioでの設定例についてリンク追加（Daigoさんありがとうございます！）
 
@@ -17,6 +28,7 @@ publication_name: "altiveinc"
 - AppIcon(launcher_icon) の切り替えに対応しました👏
 - Flavorごとにxcconfigを作成する方式に変えて、シェルスクリプトを軽量化しました。
 :::
+
 
 | 開発環境 | ステージング環境 | 本番環境 |
 | ---- | ---- | ---- |
