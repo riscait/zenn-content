@@ -17,11 +17,11 @@ publication_name: "altiveinc"
 Effective Dart
 https://dart.dev/guides/language/effective-dart
 ↓
-pedatic
+pedantic
 `package:pedantic/analysis_options.yaml`
 https://github.com/google/pedantic
 ↓
-pedatic_mono：
+pedantic_mono：
 pedantic最新ルール + Flutterサンプルリポジトリなどのルールで設定されているものはすべて取り入れてある
 `package:pedantic_mono/analysis_options.yaml`
 
@@ -44,11 +44,11 @@ AnalyzerやFormatルールに設定できるものは設定し、正とする。
 ```dart
 // ◎
 if (isEnabled) {
-  excute();
+  execute();
 }
 // x
 if (isEnabled) {
-    excute();
+    execute();
 } 
 ```
 
