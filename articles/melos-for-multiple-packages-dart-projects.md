@@ -50,7 +50,7 @@ Flutterアプリ開発者にとっては馴染みのありそうなリポジト�
 - [fluttercommunity/plus_plugins](https://github.com/fluttercommunity/plus_plugins)
 - [gql-dart/ferry](https://github.com/gql-dart/ferry)
 - [flutter-stripe/flutter_stripe](https://github.com/flutter-stripe/flutter_stripe)
-- [rrousselGit/river_pod](https://github.com/rrousselGit/river_pod)
+- [rrousselGit/riverpod](https://github.com/rrousselGit/riverpod)
 
 **FlutterFire, PlusPlugins, Riverpod**等々、
 個人的に日頃お世話になっているパッケージで使われていました。
