@@ -2,7 +2,7 @@
 title: "Riverpod, StateNotifierでアプリ内テーマの切り替え機能を実装する"
 emoji: "🌓"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [flutter, dart, riverpod, theme, StateNotifiler]
+topics: [flutter, dart, riverpod, theme, StateNotifier]
 published: true
 publication_name: "altiveinc"
 ---
@@ -284,7 +284,7 @@ ThemeModeの数（システム・ライト・ダーク）だけリストを作�
 
 最後までご閲覧いただき、ありがとうございました！
 
-Twitterでは、主にFlutter・Firebase・iOS/Swift, について呟いております。
+Twitterでは、主にFlutter・Firebase・iOS/Swift について呟いております。
 フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@Riscait](https://twitter.com/riscait) 
 
 ---
