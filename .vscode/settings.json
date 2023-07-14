@@ -9,6 +9,7 @@
         "pbxproj",
         "SRCROOT",
         "sublist",
-        "xcodeproj"
+        "xcodeproj",
+        "zenn"
     ]
 }
