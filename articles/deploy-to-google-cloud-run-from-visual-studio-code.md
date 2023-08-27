@@ -6,6 +6,8 @@ topics: [cloudrun, vscode, gcp]
 published: true
 publication_name: "altiveinc"
 ---
+? cspell:ignore Frun Fprojects Flocations Fservices
+
 # 概要
 
 IDE向けに提供されている拡張機能である「Google Cloud Code」のVS Code版を使い、
@@ -83,6 +85,8 @@ https://cloud.google.com/blog/topics/developers-practitioners/how-create-public-
 > 信頼できるドメインのユーザーにのみパーミッションが付与されるようにします。
 
 Google Cloudにて組織ポリシーを設定した際に、このDRSポリシーをオンしたことが原因のようでした。
+
+https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains?hl=ja#console
 
 ## 対策方法に関しては2通り
 ひとつはDRSポリシーを一旦無効にし、allUsersを含むIAMポリシーを設定した後に、DRSポリシーを再度有効にする方法。
@@ -267,10 +271,13 @@ response:
 
 これでいよいよ準備は整いました🙌
 
-## Cloud RunサービスのIAMポリシーを更新
+## Cloud RunサービスのIAMポリシーバインディングを追加
+
+メンバーには `allUsers` を指定し、ロールには `roles/run.invoker` を指定します。
 
 ```shell
-$ gcloud beta run services add-iam-policy-binding --region=us-central1 --member=allUsers --role=roles/run.invoker altive-api
+$ gcloud beta run services add-iam-policy-binding {SERVICE} \
+ --region={REGION} --member=allUsers --role=roles/run.invoker
 
 Updated IAM policy for service [altive-api].
 bindings:
