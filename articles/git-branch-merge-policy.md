@@ -36,11 +36,12 @@ publication_name: "altiveinc"
 
 以下に各ブランチの用途を記載します。
 
-## `feature/*`
+## `feature` ブランチ
 
 最新の `main` ブランチから派生させるブランチです。
 対応するIssueが分かりやすいように、ブランチ名にはIssue番号を含めるようにしています。
-例： `feature/100-add-chat-message`
+
+例： `100-add-chat-message`
 
 プルリクエストを経て、 `main` ブランチにマージされます。
 
@@ -49,7 +50,18 @@ publication_name: "altiveinc"
 機能追加・不具合修正・リファクタリングなどの実装種類によって細かくブランチを分けることはしていません。
 分けるメリットが、都度考える手間を上回れないと判断したためです。
 
-## `release/*`
+:::message
+完全に好みですが、最近は `feature/100-add-chat-message` のような、ディレクトリは使っていません。
+(releaseブランチは例外として) `main` ブランチかそれ以外かの構成になるためディレクトリを使わなくても不都合を感じなかったためです。
+普段は以下のようなブランチリストになります。
+
+- 100-add-chat-message
+- 101-fix-page-not-found-bug
+- 102-refactor-settings-page-body
+- main
+:::
+
+## `release/*` ブランチ
 
 最新の `main` ブランチから派生させるブランチです。
 例： `release/1.0.0`
@@ -62,7 +74,7 @@ publication_name: "altiveinc"
 このリリースブランチがマージされると、GitHub Actionsによって自動的に `main` ブランチに `Tag` が打たれるようにしています。
 例： `v1.0.0` 
 
-## `main`
+## `main` ブランチ
 
 デプロイ（リリース）可能状態を保つ、主となり基準となるブランチです。
 チーム各員の `feature` ブランチの成果や `release` ブランチがマージされ、集約されます。
