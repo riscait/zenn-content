@@ -1,5 +1,5 @@
 ---
-title: "Flutter/DartとGo: 異なる世界の架け橋を築く"
+title: "OpenAPIからGoとDart(Flutter)のコードを生成し、横断的かつスピーディーにアプリ開発する"
 emoji: "🐈"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [go, dart, flutter, openapi]
