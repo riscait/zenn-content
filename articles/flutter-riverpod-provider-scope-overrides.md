@@ -6,7 +6,7 @@ topics: [flutter, riverpod, flavor, dart]
 published: true
 publication_name: "altiveinc"
 ---
-こんにちは、[村松龍之介@Riscait](https://twitter.com/riscait)です。
+こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
 FlutterとiOSネイティブアプリ開発を仕事を行なっております。
 
 Riverpodでは、Providerはグローバルで定義しますが、 `ProviderScope` で囲った箇所でのみProviderが使用になります。

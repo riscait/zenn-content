@@ -6,7 +6,7 @@ topics: ["flutter"]
 published: false
 publication_name: "altiveinc"
 ---
-こんにちは、[村松龍之介@Riscait](https://twitter.com/riscait)です。
+こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
 
 日中は企業でiOSアプリのネイティブ開発を、個人ではFlutter x Firebaseで iOS & Androidアプリを作っています。
 

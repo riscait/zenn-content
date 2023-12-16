@@ -11,7 +11,7 @@ publication_name: "altiveinc"
 ・起動可能なサンプルリポジトリを作成しました。
  → [flutter_theme_mode_selector_example | GitHub](https://github.com/Riscait/flutter_theme_mode_selector_example)
 :::
-こんにちは、[村松龍之介@Riscait](https://twitter.com/riscait)です。
+こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
 
 :::message
 この記事は、 [Flutter #1 Advent Calendar 2020 | Qiita](https://qiita.com/advent-calendar/2020/flutter) 21日目の記事です💪

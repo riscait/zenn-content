@@ -6,7 +6,7 @@ topics: ["UIKit", "Swift"]
 published: true
 publication_name: "altiveinc"
 ---
-こんにちは、[村松龍之介@Riscait](https://twitter.com/riscait)です。
+こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
 
 この記事は、 [iOS Advent Calendar 2020 | Qiita](https://qiita.com/advent-calendar/2020/ios) 19日目の記事です💪
 
