@@ -3,10 +3,15 @@ title: "FVM 3.0 使ってみた（Flutter Version Management）"
 emoji: "🔄"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [flutter, fvm]
-published: false
+published: true
 publication_name: "altiveinc"
 # cSpell:words fvmrc yourrank
 ---
+:::message
+FVM 3.0.0 はまだBeta版のPre-releaseです。
+安定版が正式リリースされたら、改めてこの記事を更新する予定です🚀
+:::
+
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 2年前に「[FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/altiveinc/articles/flutter-version-management)」という記事を書きました。（もうそんな経ったの…⁉️）
@@ -60,7 +65,7 @@ publication_name: "altiveinc"
 https://github.com/leoafarias/fvm/releases
 :::
 
-## FVM 3.0 のインストール
+## FVM 3.0.0-beta のインストール
 
 安定版がリリースされれば、Homebrew等でシンプルにインストールできるようになると思いますが、
 現時点では、GitHub Repository Releasesからインストールしました。
@@ -223,7 +228,7 @@ Please use a tool like https://jsonformatter.curiousconcept.com to validate and 
 }
 ```
 
-## fvm use でFlutter SDKのバージョンを指定する
+## `fvm use` でFlutter SDKのバージョンを指定する
 
 ```shell
 fvm use 3.16.5
@@ -241,7 +246,7 @@ This does not seem to be a Flutter project directory
 `--force` は、引き続き使用できるので、プロンプトを省略したい場合は指定しましょう。
 :::
 
-### .gitignore
+### `.gitignore` が自動で修正される
 
 ここで、 `.gitignore` に `.fvm/` を追加するか尋ねられました。
 
@@ -258,7 +263,7 @@ You should add the fvm version directory ".fvm/" to .gitignore?
 
 以前は `.fvm/flutter_sdk` を指定していたと思いますが、v3では `.fvm` でOKです。
 
-### settings.jsonの `dart.flutterSdkPath` の自動書き換え
+### `settings.json` の `dart.flutterSdkPath` が自動で修正される
 
 ```shell
 This does not seem to be a Flutter project directory
@@ -305,9 +310,9 @@ v3では、具体的なバージョンが記述されるようになりました
 これで無事に Flutter SDKバージョンを指定することができました！
 出力された通り、VS CodeのTerminalを再起動すると、 `flutter` コマンドで指定したSDKバージョンが使用できるようになります🙌
 
-## チームメンバーや新しく入ったプロジェクトでは `fvm install` を実行
+## `fvm install` でプロジェクトで指定されているFlutter SDKをインストールする
 
-`fvm use` を実行していないメンバーは、従来通り `fvm install` を実行して、指定のSDKをインストールしましょう。
+`fvm use` を実行していないチームメンバーや、新しく入ったプロジェクトでは、従来通り `fvm install` を実行して指定のSDKをインストールしましょう👌
 
 ```shell
 fvm install --setup
@@ -356,6 +361,23 @@ $ melos exec
 問題なく、 FVMで指定したFlutter SDKのバージョンが使用されています🙌
 
 Melosとの併用も問題なさそうです👌
+
+## v2とv3の共存
+
+以下に注意することで、v2とv3を共存させることは一応可能だと思います。
+
+- `.fvmrc` をコミットする
+- `fvm_config.json` を削除しない
+- `fvm_config.json` は `.gitignore` されないようにする
+```
+# FVM Version Cache
+.fvm
+!.fvm/fvm_config.json
+```
+- `settings.json` をGit管理にしない。または、 `dart.flutterSdkPath` だけはローカルの差分として保持する
+- `melos.yaml` で `sdkPath: .fvm/flutter_sdk` を指定しない
+
+最後の `settings.json` と `melos.yaml` がちょっと面倒ですね…🤔
 
 ## おわりに
 

@@ -6,8 +6,12 @@ topics: [flutter, fvm]
 published: true
 publication_name: "altiveinc"
 ---
+:::message
+FVM 3.0 については下記の記事をご覧ください🚀
+https://zenn.dev/altiveinc/articles/flutter-version-management-3
+:::
 
-こんにちは、Altive株式会社のFlutterアプリ開発者、村松龍之介（[@riscait](https://twitter.com/riscait)）です😸
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 Flutter SDKのバージョン管理ツールであるFVM（Flutter Version Management）をご紹介します。
 
@@ -38,7 +42,7 @@ FVMを使って、アプリごとにチームでFlutter SDKのバージョンを
 ## FVMを選ぶ利点
 - Flutterバージョンの切り替えが簡単（コマンド1つ）
 - バージョン情報を含むパスを設定ファイルに記述しなくて良い
-- VS CodeならUser Sattingsでパスを指定すればプロジェクトごとの設定は必須ではない
+- VS CodeならUser Settingsでパスを指定すればプロジェクトごとの設定は必須ではない
 
 ## FVMのちょっと気になるところ
 - `fvm flutter xxx` のように、flutterを指定したバージョンで実行したい時はプレフィクスが必要
