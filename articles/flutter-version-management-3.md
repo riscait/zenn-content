@@ -9,7 +9,7 @@ publication_name: "altiveinc"
 ---
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
-2年前に「[FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/altiveinc/articles/flutter-version-management)」という記事を書きました。
+2年前に「[FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/altiveinc/articles/flutter-version-management)」という記事を書きました。（もうそんな経ったの…⁉️）
 
 それからずっとFVMを使っていますが、v3.0.0-betaがリリースされているので使ってみました！
 
@@ -23,52 +23,45 @@ publication_name: "altiveinc"
 
 ## FVM 3.0 で変わること
 
-最新版はこちらのGitHub Repositoryで確認できます。
-https://github.com/leoafarias/fvm/releases
-
 ### 追加機能
 
-- VSCodeとの統合が強化され、正しいFlutter SDKバージョンを自動的に設定し、ターミナルパスを更新する機能を追加。これにより、flutterコマンドを直接使用できるようになります
+- VSCodeとの統合が強化され、Flutter SDKバージョンを自動的に設定し、ターミナルパスを更新する機能が追加。
+**これにより、flutterコマンドを直接使用できるようになります**
 - Git Flutterリポジトリのミラーリングにより、新しいSDKバージョンのクローンが速くなります
-- .gitignoreチェック: '.fvm'ディレクトリのチェックと必要に応じて自動追加される機能を追加。
-- Flutter SDKのキャッシュ検証: キャッシュされたFlutter SDKがアップグレードされたかを検証し、修正アクションのオプションを提供。
-- Flutter SDKの互換性チェック: 現在のプロジェクトとの互換性を確認する機能。
-- FVM設定管理の改善: プロジェクトごとにFVM設定をオーバーライドする機能を含む。
+- .gitignoreの自動追加: `.fvm` ディレクトリがチェックされて自動で追記されます
+- Flutter SDKのキャッシュ検証: キャッシュされたFlutter SDKがアップグレードされたかを検証し、修正アクションのオプションを提供されます
+- Flutter SDKの互換性チェック: 現在のプロジェクトとの互換性を確認する機能が追加
 
 ### 改善点
 
-- エラーメッセージ、ログ、ヘルプ情報の改善。
-- fvm flutterコマンドのカラー出力。
-fvm doctorコマンドの改善。
-fvm releasesおよびfvm list出力の改善。
-fvm globalコマンドのエラーチェックの改善。
-FVMアップデートチェックは1日1回に制限。--update-checkフラグで無効化可能。
+- エラーメッセージ、ログ、ヘルプ情報の改善
+- fvm flutterコマンドの出力がカラー化
+- fvm doctorコマンドの改善。
+- fvm releasesおよびfvm list出力の改善
+- fvm globalコマンドのエラーチェックの改善
 
 ### 変更点
 
-- fvm releasesコマンドはデフォルトで安定版に設定。全リリースを見るには--allフラグを使用。
-- "flavor"コマンドを削除し、fvm use {flavor}に置き換え。
-- "destroy"コマンドを削除し、fvm remove --allに置き換え。
-- 設定ファイルは.fvmrcに変更。.fvmは.gitignoreに追加可能、FVMが自動的に移行。
-- fvm use {version} --env {flavor}をflavorのエイリアスとして使用可能。
-- Flutterリポジトリコミットハッシュを使用する際、ハッシュは10桁必要。FVMが検証し、正しいハッシュを提供。
+- `fvm releases` コマンドはデフォルトで安定版のみ表示されるように。全てのリリースを見るには `--all` フラグを使用。
+- `flavor` コマンドを削除し、 `fvm use {flavor}` に変更
+- `destroy` コマンドを削除し、 `fvm remove --all` に変更
+- **設定ファイルを `fvm_config.json` から `.fvmrc` に変更**
+これにより、 `.fvm` を `.gitignore` に追加可能に。FVMが自動的に移行しま。
+- `fvm use {version} --env {flavor}` をflavorのエイリアスとして使用可能に
+- Flutterリポジトリコミットハッシュを使用する際、ハッシュは10桁必要に。FVMが検証し、正しいハッシュが提供されます
+- `fvm install` はデフォルトでセットアップを行わなくなりました。 `--setup` フラグでセットアップも同時に行われるようになります
+`fvm use` はデフォルトでセットアップを行います。 `--skip-setup` フラグでスキップ可能
+- 環境変数 `FVM_HOME` が `FVM_CACHE_PATH` に、 `FVM_GIT_CACHE` は `FVM_FLUTTER_URL` に変更されました
 
-### 破壊的変更
-
-- デフォルトのFVM設定場所が.fvmrcに変更。自動的に移行されますが、.fvmは無視されるべきです。
-- fvm installはデフォルトでセットアップしない。--setupフラグでセットアップ可能。
-- fvm releasesはデフォルトで安定版を表示。
-- fvm flavorを削除し、fvm use {flavor}に置き換え。
-- fvm useはデフォルトでセットアップを行う。--skip-setupフラグでスキップ可能。
-- 環境変数FVM_HOMEはFVM_CACHE_PATHに、FVM_GIT_CACHEはFVM_FLUTTER_URLに変更されました。
-
-## 筆者環境
-
-- 各アプリプロジェクトではFVMを使用してチームでFlutterバージョンを統一している
-- OSS開発ではFVMは使用せず、Flutter公式サイトからダウンロードしたstable最新版を使用している
-- FVMの `global` 設定は使用していない
+:::message
+最新版、および全ての変更点はこちらのGitHub Repositoryで確認できます。
+https://github.com/leoafarias/fvm/releases
+:::
 
 ## FVM 3.0 のインストール
+
+安定版がリリースされれば、Homebrew等でシンプルにインストールできるようになると思いますが、
+現時点では、GitHub Repository Releasesからインストールしました。
 
 ### v2のアンインストール
 
