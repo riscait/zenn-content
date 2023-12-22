@@ -1,5 +1,5 @@
 ---
-title: "FVM 3.0 使ってみた（Flutter Version Management）"
+title: "FVM 3.0.0-beta を使ってみた（Flutter Version Management）"
 emoji: "🔄"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [flutter, fvm]
@@ -11,6 +11,8 @@ publication_name: "altiveinc"
 FVM 3.0.0 はまだBeta版のPre-releaseです。
 安定版が正式リリースされたら、改めてこの記事を更新する予定です🚀
 :::
+
+この記事は、[Flutter Advent Calendar 2023](https://qiita.com/advent-calendar/2023/flutter) 24日目の記事です🎄
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
