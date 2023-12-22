@@ -312,4 +312,56 @@ fvm install --setup
 
 `--setup` を付けると、Flutter SDKのビルドも行ってくれます。
 
+## Melos
+
+弊社では、モノレポ管理ツールの [Melos](https://melosjs.github.io/melos/) を使用しています。
+
+Melosへの影響を調べました。
+
+FVM v2では、設定ファイル `melos.yaml` で、以下のようにFVMのFlutter SDKパスを指定していました。
+
+```yaml
+name: yourrank
+repository: https://github.com/altive/yourrank
+sdkPath: .fvm/flutter_sdk
+```
+
+ところが FVM v3では、SDKの配置場所が `.fvm/flutter_sdk` ではなくなったので、 `sdkPath` の指定を変更する必要があります。
+
+試しに、 `sdkPath` を 削除（未指定）にして、 Melos経由でFlutter SDKのバージョンを確認してみました。
+
+```shell
+% melos exec -- "flutter --version"
+$ melos exec
+  └> flutter --version
+     └> RUNNING (in 2 packages)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+[yourrank_api_client]: Waiting for another flutter command to release the startup lock...
+
+[yourrank]: Flutter 3.16.5 • channel stable • https://github.com/flutter/flutter.git
+[yourrank]: Framework • revision 78666c8dc5 (2 days ago) • 2023-12-19 16:14:14 -0800
+[yourrank]: Engine • revision 3f3e560236
+[yourrank]: Tools • Dart 3.2.3 • DevTools 2.28.4
+[yourrank_api_client]: Flutter 3.16.5 • channel stable • https://github.com/flutter/flutter.git
+[yourrank_api_client]: Framework • revision 78666c8dc5 (2 days ago) • 2023-12-19 16:14:14 -0800
+[yourrank_api_client]: Engine • revision 3f3e560236
+[yourrank_api_client]: Tools • Dart 3.2.3 • DevTools 2.28.4
+-----------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+問題なく、 FVMで指定したFlutter SDKのバージョンが使用されています🙌
+
+Melosとの併用も問題なさそうですね👌
+
 ## おわりに
+
+FVM v3.0.0は、まだベータ版ですが、v2からの改善点が多く、使いやすくなっていると感じました。
+安定版のリリースが待ち遠しいですね！
+
+Xでは、主にアプリ開発について呟いております。
+フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
+
+### 宣伝
+Riverpod の実践入門本を書きました👍
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
