@@ -11,7 +11,7 @@ publication_name: "altiveinc"
 
 2年前に「[FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/altiveinc/articles/flutter-version-management)」という記事を書きました。（もうそんな経ったの…⁉️）
 
-それからずっとFVMを使っていますが、v3.0.0-betaがリリースされているので使ってみました！
+それからずっとFVMを使っていますが、v3.0.0-beta (Pre-release)がリリースされているので使ってみました！
 
 ## FVMとは
 
@@ -22,6 +22,8 @@ publication_name: "altiveinc"
 何らかの理由で最新ではないバージョンや、逆に安定版ではないBetaバージョンを使用したい場合にも便利です。
 
 ## FVM 3.0 で変わること
+
+`fvm 3.0.0-beta.5 (Pre-release)` のリリースノートで確認でき、気になる項目をざっくりリストアップしました。
 
 ### 追加機能
 
@@ -43,10 +45,10 @@ publication_name: "altiveinc"
 ### 変更点
 
 - `fvm releases` コマンドはデフォルトで安定版のみ表示されるように。全てのリリースを見るには `--all` フラグを使用。
-- `flavor` コマンドを削除し、 `fvm use {flavor}` に変更
-- `destroy` コマンドを削除し、 `fvm remove --all` に変更
+- `flavor` コマンドが削除され、 `fvm use {flavor}` に変更
+- `destroy` コマンドが削除され、 `fvm remove --all` に変更
 - **設定ファイルを `fvm_config.json` から `.fvmrc` に変更**
-これにより、 `.fvm` を `.gitignore` に追加可能に。FVMが自動的に移行しま。
+これにより、 `.fvm` を `.gitignore` に追加可能に。FVMが自動的に移行します。
 - `fvm use {version} --env {flavor}` をflavorのエイリアスとして使用可能に
 - Flutterリポジトリコミットハッシュを使用する際、ハッシュは10桁必要に。FVMが検証し、正しいハッシュが提供されます
 - `fvm install` はデフォルトでセットアップを行わなくなりました。 `--setup` フラグでセットアップも同時に行われるようになります
@@ -201,7 +203,7 @@ Please use a tool like https://jsonformatter.curiousconcept.com to validate and 
 
 これは、`.vscode/settings.json` にコメントと末尾カンマがあったためでした。
 （厳密ですね👀）
-コメントと末尾カンマを取り除いて、JSONフォーマットに従えば問題ありません。
+`settings.json` からコメントと末尾カンマを取り除いて、JSONフォーマットに従えば問題ありませんでした。
 :::
 
 ---
@@ -281,7 +283,14 @@ You can then use "flutter" command within the VsCode terminal.
   "dart.flutterSdkPath": ".fvm/versions/3.16.5"
 ```
 
-下記のような構成になっていました。
+:::message
+v2では `.fvm/flutter_sdk` のように、具代的なバージョンは記述していなかったですが、
+v3では、具体的なバージョンが記述されるようになりました。
+
+`fvm use` コマンドで自動で書き換えてくれる＆ローカルパスではないので、引き続き `settings.json` をGit管理に入れてチームで共有していても問題はありません。
+:::
+
+ちなみに `.fvm` ディレクトリは下記のような構成になっていました👀
 
 ```
 -.fvm
@@ -291,6 +300,7 @@ You can then use "flutter" command within the VsCode terminal.
   - version
 ```
 
+---
 
 これで無事に Flutter SDKバージョンを指定することができました！
 出力された通り、VS CodeのTerminalを再起動すると、 `flutter` コマンドで指定したSDKバージョンが使用できるようになります🙌
@@ -305,7 +315,7 @@ fvm install --setup
 
 `--setup` を付けると、Flutter SDKのビルドも行ってくれます。
 
-## Melos
+## Melosとの相性は問題なさそう
 
 弊社では、モノレポ管理ツールの [Melos](https://melosjs.github.io/melos/) を使用しています。
 
@@ -319,7 +329,7 @@ repository: https://github.com/altive/yourrank
 sdkPath: .fvm/flutter_sdk
 ```
 
-ところが FVM v3では、SDKの配置場所が `.fvm/flutter_sdk` ではなくなったので、 `sdkPath` の指定を変更する必要があります。
+ところが FVM v3では、SDKの配置場所が `.fvm/flutter_sdk` ではなくなったので、 `sdkPath` の指定を変更する必要がありますね。
 
 試しに、 `sdkPath` を 削除（未指定）にして、 Melos経由でFlutter SDKのバージョンを確認してみました。
 
@@ -345,16 +355,15 @@ $ melos exec
 
 問題なく、 FVMで指定したFlutter SDKのバージョンが使用されています🙌
 
-Melosとの併用も問題なさそうですね👌
+Melosとの併用も問題なさそうです👌
 
 ## おわりに
 
-FVM v3.0.0は、まだベータ版ですが、v2からの改善点が多く、使いやすくなっていると感じました。
-安定版のリリースが待ち遠しいですね！
+FVM v3.0.0は、まだベータ版ですが、v2からの改善点が多く、使いやすくなっていると感じました。安定版のリリースが待ち遠しいですね！
 
 Xでは、主にアプリ開発について呟いております。
 フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
 
 ### 宣伝
-Riverpod の実践入門本を書きました👍
+Riverpod の実践入門本を公開中です👍
 https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
