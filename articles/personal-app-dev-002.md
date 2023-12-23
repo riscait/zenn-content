@@ -7,7 +7,7 @@ published: true
 publication_name: "altiveinc"
 ---
 
-こんにちは、 村松龍之介[@Riscait](https://twitter.com/riscait) です。
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！です。
 
 平日は業務としてiOSネイティブアプリの開発を行うかたわら、
 個人開発としてFlutter x Firebase でiOS & Androidアプリを作っています。
@@ -174,5 +174,16 @@ Twitterは妻に運用を任せています！フォローしていただいた�
 
 最後までご閲覧ありがとうございます🙇‍♂️
 
-Twitterでも、主にFlutterとFirebaseについて呟いております！
-フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@Riscait](https://twitter.com/riscait) 
+Xでは、主にアプリ開発について呟いております。
+フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

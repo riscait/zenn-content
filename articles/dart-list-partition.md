@@ -7,7 +7,8 @@ published: true
 publication_name: "altiveinc"
 ---
 
-こんにちは！Altive株式会社でFlutterアプリ開発を行なっている村松龍之介([@riscait](https://twitter.com/riscait))です😸
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
+
 
 ---
 
@@ -90,8 +91,19 @@ final items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
 
 https://pub.dev/documentation/collection/latest/collection/IterableExtension/slices.html
 
-# 最後に
+## 最後に
 個人的には、すでに採用していることが多く、Dart.devのパッケージでも `collection` の `slices(length)` メソッドを利用していきたいと思いました！
 しかし、何らかの理由でパッケージに依存したくない場合は `do-while, take, skip` を使うと思います。
 
 最後までご閲覧ありがとうございました🙌
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

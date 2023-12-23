@@ -6,7 +6,7 @@ topics: ["flutter"]
 published: false
 publication_name: "altiveinc"
 ---
-こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 日中は企業でiOSアプリのネイティブ開発を、個人ではFlutter x Firebaseで iOS & Androidアプリを作っています。
 
@@ -45,7 +45,7 @@ ResStockWidgetを削除してResolvedを空に。
 
 https://makotton.com/2014/10/03/559
 
-## Configration
+## Configuration
 ```
 configuration didn't match to Development, Staging or Production
 Debug
@@ -55,3 +55,14 @@ Command PhaseScriptExecution failed with a nonzero exit code
 Edit Scheme
 Run
 Debug-Developmentを選択
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

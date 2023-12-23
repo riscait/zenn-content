@@ -7,12 +7,17 @@ published: true
 publication_name: "altiveinc"
 # cSpell:words fvmrc yourrank
 ---
-:::message
+:::message alert
 FVM 3.0.0 はまだBeta版のPre-releaseです。
 安定版が正式リリースされたら、改めてこの記事を更新する予定です🚀
 :::
 
-この記事は、[Flutter Advent Calendar 2023](https://qiita.com/advent-calendar/2023/flutter) 24日目の記事です🎄
+:::message
+この記事は、**[Flutter Advent Calendar 2023](https://qiita.com/advent-calendar/2023/flutter)** 24日目の記事です🎄
+
+23日は「ツルオカ」さんの「**[Flutterにおけるチャートパッケージ総まとめ](https://zenn.dev/tsuruo/articles/a8fc96ff5aa43a)**」でした👏
+25日は「mono」さんの「**Flutterプロジェクトの場合、関連ツール(CLIアプリなど)はDartで組むと捗る**」の予定です❄️
+:::
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
@@ -322,6 +327,27 @@ fvm install --setup
 
 `--setup` を付けると、Flutter SDKのビルドも行ってくれます。
 
+## FVMでFlutter SDKを指定して `flutter create` する方法
+
+Flutter SDKバージョンを指定した上での新しいFlutterプロジェクトの作成方法は、v2と同じです。
+
+以下のように、プロジェクト用のディレクトリを作成し、 `fvm use {version} --force` でFlutter SDKを指定してから、 `flutter create` コマンドを実行します。
+
+```shell
+mkdir fvm_sample_app
+cd fvm_sample_app/
+fvm use 3.16.5 --force
+fvm flutter create .
+```
+
+ディレクトリをVS Codeで開いて、VS CodeのTerminalで実行すれば `fvm` をつけなくても `flutter clean` を使えそうです。
+
+:::message
+ディレクトリ名に `-` などDartプロジェクトに使用できない文字列が含まれている場合は、 `--project-name` の指定が必要です。
+また、 app（アプリ）の場合は、作成後に修正するのも手間なので、各種オプションを設定することをお勧めします。
+`fvm flutter create --project-name fvm_sample_app --org jp.co.altive --empty .`
+:::
+
 ## Melosとの相性は問題なさそう
 
 弊社では、モノレポ管理ツールの [Melos](https://melosjs.github.io/melos/) を使用しています。
@@ -383,11 +409,24 @@ Melosとの併用も問題なさそうです👌
 
 ## おわりに
 
-FVM v3.0.0は、まだベータ版ですが、v2からの改善点が多く、使いやすくなっていると感じました。安定版のリリースが待ち遠しいですね！
+FVM 3.0.0はまだベータ版ですが、**v2からの改善点が多く、使いやすくなっている**と感じました。
+安定版のリリースが待ち遠しいです！
 
 Xでは、主にアプリ開発について呟いております。
 フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
 
 ### 宣伝
-Riverpod の実践入門本を公開中です👍
+
+弊社社員の小林さんも、**[Flutter Advent Calendar 2023](https://qiita.com/advent-calendar/2023/flutter)** の17日目の記事を投稿しています🎄
+https://zenn.dev/altiveinc/articles/flutter-custom-lint-rule-creation
+
+---
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
 https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

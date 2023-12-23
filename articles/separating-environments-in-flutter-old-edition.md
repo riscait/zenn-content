@@ -21,7 +21,8 @@ https://zenn.dev/altiveinc/articles/separating-environments-in-flutter
 | ---- | ---- | ---- |
 | ![](/images/separating-environments-in-flutter/flavor-dev-ios-screenshot.png =200x) | ![](/images/separating-environments-in-flutter/flavor-stg-ios-screenshot.png =200x) | ![](/images/separating-environments-in-flutter/flavor-prod-ios-screenshot.png =200x) |
 
-こんにちは、Flutterアプリ開発者の村松龍之介（[@riscait](https://twitter.com/riscait)）です😸
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
+
 
 Flutterにおいて、その環境分けの方法はいくつかありますが、今回は `Dart-defines` 1つのみを使用して実現する方法で実行してみたのでご紹介します。
 
@@ -603,7 +604,14 @@ https://pub.dev/packages/package_info_plus
   - Android: `applicationId`
 
 # 宣伝
-Riverpod の実践入門本を書きました👍
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
 https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
 
 # 参考記事

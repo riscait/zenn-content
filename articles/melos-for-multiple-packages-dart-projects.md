@@ -7,7 +7,7 @@ published: true
 publication_name: "altiveinc"
 ---
 
-こんにちは、Altive株式会社のFlutterアプリ開発者、村松龍之介（[@riscait](https://twitter.com/riscait)）です😸
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 この記事は「[Flutter Advent Calendar 2021](https://qiita.com/advent-calendar/2021/flutter)」23日目の記事です。
 
@@ -451,6 +451,17 @@ https://melos.invertase.dev/ide-support#package-graph
 [![melos](https://img.shields.io/badge/maintained%20with-melos-f700ff.svg?style=flat-square)](https://github.com/invertase/melos)
 ```
 
-## リンク
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
+
+## 参考リンク
 GitHub repository
 https://github.com/invertase/melos

@@ -11,7 +11,7 @@ publication_name: "altiveinc"
 ・起動可能なサンプルリポジトリを作成しました。
  → [flutter_theme_mode_selector_example | GitHub](https://github.com/Riscait/flutter_theme_mode_selector_example)
 :::
-こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！です。
 
 :::message
 この記事は、 [Flutter #1 Advent Calendar 2020 | Qiita](https://qiita.com/advent-calendar/2020/flutter) 21日目の記事です💪
@@ -284,8 +284,19 @@ ThemeModeの数（システム・ライト・ダーク）だけリストを作�
 
 最後までご閲覧いただき、ありがとうございました！
 
-Twitterでは、主にFlutter・Firebase・iOS/Swift について呟いております。
-フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@Riscait](https://twitter.com/riscait) 
+Xでは、主にアプリ開発について呟いております。
+フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
 
 ---
 ## 修正履歴

@@ -6,7 +6,7 @@ topics: ["UIKit", "Swift"]
 published: true
 publication_name: "altiveinc"
 ---
-こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！です。
 
 この記事は、 [iOS Advent Calendar 2020 | Qiita](https://qiita.com/advent-calendar/2020/ios) 19日目の記事です💪
 
@@ -120,5 +120,16 @@ self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config]
 
 ご閲覧ありがとうございます！
 
-Twitterでは、主にFlutter・Firebase・iOS/Swift, について呟いております。
-フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@Riscait](https://twitter.com/riscait) 
+Xでは、主にアプリ開発について呟いております。
+フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

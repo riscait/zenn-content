@@ -9,7 +9,7 @@ publication_name: "altiveinc"
 ---
 ## はじめに
 
-こんにちは、Flutterでのアプリ開発をメインとしている、Altive株式会社の[村松龍之介@riscait](https://x.com/riscait)です！
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 この記事は、 [Go 言語 Advent Calendar 2023 | Qiita](https://qiita.com/advent-calendar/2023/go) 17日目の記事です🚀
 
@@ -329,3 +329,14 @@ Firebase Emulatorを起動するタスクを `tasks.json` に登録してあり�
 これから複数のアプリを作ってみて、より良い方法があれば改善もしていきたいと思います。
 
 ご覧いただきありがとうございました。
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

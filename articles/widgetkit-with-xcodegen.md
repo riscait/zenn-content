@@ -11,7 +11,7 @@ publication_name: "altiveinc"
 
 ---
 
-こんにちは、 村松龍之介[@Riscait](https://twitter.com/riscait) です！
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！です。
 
 iOS 14 で追加されたWidget(WidgetKit)を実装してみよう！
 と思い立ち、プロジェクトを作り始めましたが、XcodeGenとの併用に詰まりました。
@@ -252,5 +252,16 @@ XcodeGenでプロジェクト生成した場合のSchemeアイコン
 
 もっと良い書き方があるよ！や書いてみてこっちの方が良かった！という構成があれば教えていただけると嬉しいです。
 
-Twitterでも、SwiftやFlutter/Firebaseについて呟いております！
-フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@Riscait](https://twitter.com/riscait) 
+Xでは、主にアプリ開発について呟いております。
+フォローしていただければ嬉しいです☺️ → 村松龍之介（[@riscait](https://x.com/riscait)）
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction

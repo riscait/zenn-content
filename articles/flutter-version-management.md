@@ -345,7 +345,14 @@ Flutterアプリ開発では基本的にFVMを使用してFlutter SDKバージ�
 
 # 最後に
 ## 宣伝
-Riverpod の実践入門本を書きました👍
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
 https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
 
 ## 参考

@@ -6,7 +6,7 @@ topics: [flutter, riverpod, flavor, dart]
 published: true
 publication_name: "altiveinc"
 ---
-こんにちは、[村松龍之介@riscait](https://twitter.com/riscait)です。
+こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！です。
 FlutterとiOSネイティブアプリ開発を仕事を行なっております。
 
 Riverpodでは、Providerはグローバルで定義しますが、 `ProviderScope` で囲った箇所でのみProviderが使用になります。
@@ -182,4 +182,15 @@ Future<void> run({@required Flavor flavor}) async {
 ご閲覧ありがとうございました！
 
 Twitterでも、主に Flutter, Firebase、iOS/Swift について呟いております。
-フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@Riscait](https://twitter.com/riscait) 
+フォローしていただければ嬉しいです☺️ → 🐦村松龍之介[@riscait](https://twitter.com/riscait) 
+
+## 宣伝
+
+Altive株式会社では、Flutterアプリの開発・運営を承っております。
+お気軽にお問い合わせください🫡 
+https://altive.co.jp/contact
+
+---
+
+Riverpod の実践入門本を公開中です📘
+https://zenn.dev/riscait/books/flutter-riverpod-practical-introduction
