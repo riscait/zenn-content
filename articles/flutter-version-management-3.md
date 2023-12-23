@@ -348,6 +348,21 @@ fvm flutter create .
 `fvm flutter create --project-name fvm_sample_app --org jp.co.altive --empty .`
 :::
 
+## `fvm global` でどこでも `flutter` コマンドを使う
+
+v3にも、v2と同じく `fvm global` コマンドがあります。
+
+Flutter公式サイトからSDKをダウンロードしていない場合、 `.fvmrc` のないプロジェクトやそれ以外のディレクトリでは `flutter` コマンドが使えません。
+
+`fvm global {version}` コマンドを実行することで、任意のディレクトリで `flutter` コマンドを使用できるようになります。
+
+PATHを通す必要があります。
+
+```shell:.zshrc
+# FVM global
+export PATH="$PATH:$HOME/fvm/default/bin"
+```
+
 ## Melosとの相性は問題なさそう
 
 弊社では、モノレポ管理ツールの [Melos](https://melosjs.github.io/melos/) を使用しています。
