@@ -407,6 +407,20 @@ Melosとの併用も問題なさそうです👌
 
 最後の `settings.json` と `melos.yaml` がちょっと面倒ですね…🤔
 
+## settings.json お勧め設定
+
+VS Codeの `settings.json` に以下を追記することで、検索時に `.fvm` ディレクトリ以下を除外することができます。
+これがないと検索時にノイズが多くなるので追加することをお勧めします。
+
+```json
+  "search.exclude": {
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true,
+    "**/.dart_tool": true,
+    "**/.fvm": true // <- 追記
+  },
+```
+
 ## おわりに
 
 FVM 3.0.0はまだベータ版ですが、**v2からの改善点が多く、使いやすくなっている**と感じました。
