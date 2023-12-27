@@ -16,7 +16,7 @@ FVM 3.0.0 はまだBeta版のPre-releaseです。
 この記事は、**[Flutter Advent Calendar 2023](https://qiita.com/advent-calendar/2023/flutter)** 24日目の記事です🎄
 
 23日は「ツルオカ」さんの「**[Flutterにおけるチャートパッケージ総まとめ](https://zenn.dev/tsuruo/articles/a8fc96ff5aa43a)**」でした👏
-25日は「mono」さんの「**Flutterプロジェクトの場合、関連ツール(CLIアプリなど)はDartで組むと捗る**」の予定です❄️
+25日は「mono」さんの「**[Flutterプロジェクトの場合、関連ツール(CLIアプリなど)はDartで組むと捗る](https://medium.com/flutter-jp/dart-cli-475c758f7c3a)**」です❄️
 :::
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
