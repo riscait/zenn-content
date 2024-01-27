@@ -74,7 +74,7 @@ https://github.com/altive/flutter_app_template/tree/main/packages/flutter_app
 dev, stg環境の場合はアプリ名とアプリIDに、それぞれ環境名を足したもので表現したいと思います。
 もちろん、「アプリ名の方は（dev）のように括弧で表現する」といったことも自由なので、適宜ご調整ください。
 
-## 必要な下準備
+## Firebaseを使用する場合
 - Firebaseを使用している場合は、 `flutterfire-cli` を使用したり、FirebaseのWebコンソールから環境数分のプロジェクトとアプリを作成して、iOS用の `GoogleService-Info.plist` と `google-services.json` をダウンロードしておきましょう。
 
 :::message
@@ -82,9 +82,11 @@ Firebaseを使用するための初期化処理などは割愛しますので、
 :::
 https://firebase.google.com/docs/flutter/setup?hl=ja
 
-# 環境を定義する
+# dart-define-from-fileを使う
 
-## 環境別の定義をまとめたファイルを作成する
+それでは、 `dart-define-from-file` を使った環境分けを行っていきましょう。
+
+## 環境の数だけ定義をまとめたファイルを作成する（JSON or ENV）
 
 まずは環境名や、環境ごとのアプリ名など、必要な項目を定義するファイルを作成しましょう👌
 
@@ -208,7 +210,7 @@ print(flavor) // 'dev'
 任意で別のデフォルト値を指定することもできますが、 `defaultValue` には頼らずに `dart-define-from-file` を指定し忘れないようにする方がオススメです。
 :::
 
-## アプリIconを環境別に分ける場合に必要なこと
+## アプリIconを環境別に分ける
 ※ Icon画像を環境別に分けない場合は読み飛ばしてください。
 
 ![](/images/separating-environments-in-flutter/home-flavor-icons.png =350x)
@@ -254,7 +256,7 @@ Androidでは `android/app/src/{flavor}/mipmap**/ic_launcher.png`
 
 に出力されているはずです👍
 
-# Android対応
+## Androidアプリに必要な対応
 定義した `Dart-define` を反映させるために `build.gradle` と `AndroidManifest.xml` ファイルを編集していきましょう。
 
 ### build.gradle を編集して dart-define を受け取る
@@ -274,7 +276,7 @@ if (project.hasProperty('dart-defines')) {
 }
 ```
 
-## `defaultConfig` でアプリIDとアプリ名を設定
+### `defaultConfig` でアプリIDとアプリ名を設定
 
 ```diff groovy:android/app/build.gradle
  defaultConfig {
@@ -290,7 +292,7 @@ if (project.hasProperty('dart-defines')) {
 - `applicationId` でアプリ名を指定
 - `resValue` を使用してアプリ名を指定
 
-## defaultConfigで設定したアプリ名を使用するようにする
+### defaultConfigで設定したアプリ名を使用するようにする
 `android/app/src/main/AndroidManifest.xml` を編集して、 `build.gradle` で設定したアプリ名を使用するようにします。
 
 ```diff xml:AndroidManifest.xml
@@ -299,7 +301,7 @@ if (project.hasProperty('dart-defines')) {
 ```
 これで環境によってアプリ名が変わるようになりました。
 
-## アイコンを切り替えるためのタスクを追加する
+### アイコンを切り替えるためのタスクを追加する
 `flutter_launcher_icons` パッケージを使って環境ごとのアイコンを作成しておきます。
 `src/{flavor}/res` ディレクトリに複数の `mipmap-xxx` ディレクトリがあり、 `ic_launcher.png` が生成されています。
 
@@ -322,17 +324,17 @@ android {
 `res.srcDirs` を指定し、 `src/main/res` と `src/{flavor}/res` をマージしています。
 この時、この2つのディレクトリに同じファイルが存在するとエラーになるので、2箇所に同じファイルが存在しないようにしましょう。
 
-## Firebase対応 (Android)
+### Firebase対応 (Android)
 :::message
 Firebaseを使用していない場合や、環境ごとにFirebaseプロジェクトを分けない場合は読み飛ばしてください。
 :::
 
-### `android/app/src` に各環境（Flavor）と同名のディレクトリ（フォルダ）を作成。
+#### `android/app/src` に各環境（Flavor）と同名のディレクトリ（フォルダ）を作成。
 - `android/app/src/dev/` , `android/app/src/stg/` , `android/app/src/prod/`
 
 各Firebaseプロジェクトに作ったAndroidアプリ用の `google-services.json` をそれぞれのディレクトリに配置します。
 
-### `android/app/build.gradle` に追記
+#### `android/app/build.gradle` に追記
 環境別ディレクトリに配置した `google-services.json` を `android/app` にコピーするタスクを定義しています。
 ```groovy:android/app/build.gradle
 task selectGoogleServicesJson(type: Copy) {
@@ -351,15 +353,15 @@ tasks.whenTaskAdded { task ->
 アプリアイコンを切り替える処理を書いた場合は `tasks.whenTaskAdded` がすでに存在しているので、同じ `tasks.whenTaskAdded` を使用してください。
 :::
 
-### `.gitignore` ファイルに追加
+#### `.gitignore` ファイルに `google-services.json` を追加
 `android/app/google-services.json` は、ビルド時に生成されて環境ごとに上書きされるので、Git管理対象外にしましょう。
 ```diff gitignore:.gitignore
 + **/android/app/google-services.json
 ```
 
-# iOS対応
+## iOSアプリに必要な対応
 
-## Dart define を受け取る Pre Actionを追加
+### Dart define を受け取る Pre Actionを追加
 ビルド時に指定した `--dart-define` をiOSで受け取るために、ビルド直前に実行されるスクリプトを追加する必要があります。
 
 もちろん、スクリプトをXcode上から直接書き込んでも良いですが、
@@ -368,7 +370,7 @@ tasks.whenTaskAdded { task ->
 
 というデメリットがあり、新規ファイルを作成して使うことで、好きなエディタ（VS Codeなど）のハイライト機能等を利用しながら編集できる利点もあります。
 
-## スクリプトファイル保存
+### スクリプトファイル保存
 `ios/scripts/extract_dart_defines.sh` というパスとファイル名で以下の内容の `sh` ファイルを保存します。
 
 ```shell:ios/scripts/extract_dart_defines.sh
@@ -404,7 +406,7 @@ done
 プレフィクスをつけて定義し、それらだけを抽出しても良いかもしれません。
 :::
 
-## XcodeのBuild Pre-actions に作成したスクリプトを登録する
+### XcodeのBuild Pre-actions に作成したスクリプトを登録する
 1. Xcodeで、Product > Scheme > Edit Scheme (⌘ ⇧ <)を開きます
 1. XcodeのScheme (Runner) をクリックして `Edit scheme` -> Build を展開して `Pre-actions` を選択します
 1. 「＋」ボンタンを押して「New Run Script Action」を選択します。
@@ -413,7 +415,7 @@ done
 
 ![](/images/separating-environments-in-flutter/build-pre-action-for-dart-defines.png)
 
-## スクリプトファイルに実行権限を与える
+### スクリプトファイルに実行権限を与える
 そのままビルドしてもスクリプトファイルが実行されません。
 以下のコマンドで実行限限を与えておきましょう。
 ```shell
@@ -421,7 +423,7 @@ chmod 755 ios/scripts/extract_dart_defines.sh
 ```
 https://qiita.com/shisama/items/5f4c4fa768642aad9e06
 
-## 各種xcconfigファイルで `Dart-Defines.xcconfig` をインポート
+### 各種xcconfigファイルで `Dart-Defines.xcconfig` をインポート
 前項のスクリプトで生成される `Dart-Defines.xcconfig` がDebug, Releaseビルド両方で使われるように、既存の `*.xcconfig` ファイルでインクルードします。
 
 ```diff:ios/Flutter/Debug.xcconfig
@@ -436,13 +438,13 @@ https://qiita.com/shisama/items/5f4c4fa768642aad9e06
 + #include "DartDefines.xcconfig"
 ```
 
-## `.gitignore` ファイルに追加
+### `.gitignore` ファイルに `Dart-Defines.xcconfig` を追加
 `Dart-Defines.xcconfig` は、ビルド時に生成され、環境により内容が上書きされるので、Git管理対象外にします。
 ```diff:.gitignore
 + **/ios/Flutter/Dart-Defines.xcconfig
 ```
 
-## アプリ表示名を環境によって変える
+### アプリ表示名を環境によって変える
 `ios/Runner/Info.plist` を編集します。
 
 アプリ名に使われる `CFBundleDisplayName` と `CFBundleName` にアプリ名を指定します。
@@ -469,7 +471,7 @@ https://qiita.com/shisama/items/5f4c4fa768642aad9e06
 - stg: `FAT stg`
 - prod: `FAT`
 
-## Bundle IDを環境によって変える
+### Bundle IDを環境によって変える
 `ios/Runner.xcodeproj/project.pbxproj` を `PRODUCT_BUNDLE_IDENTIFIER` で検索するか、
 Xcode > Runner > TARGETS Runner > Build Settings の `Product Bundle Identifier` を表示して、
 `$(appId)` に変更します。
@@ -485,7 +487,7 @@ Debug, Profile, Release すべてのBundle IDに $(appId) が設定されてい�
 
 これで、環境ごとにアプリのBundle IDが変わるようになりました👏
 
-## Appアイコンを環境によって変える
+### Appアイコンを環境によって変える
 `ios/Runner.xcodeproj/project.pbxproj` を `ASSETCATALOG_COMPILER_APPICON_NAME` で検索するか、
 Xcode > Runner > TARGETS Runner > Build Settings の `Primary App Icon Set Name` を表示して、
 `AppIcon` と指定されている値を `AppIcon-$(flavor)` に変更します。
@@ -502,14 +504,14 @@ Xcode > Runner > TARGETS Runner > Build Settings の `Primary App Icon Set Name`
 
 これで、環境ごとにアプリのアイコンが変わるようになりました👏
 
-## Firebase対応 (iOS)
+### Firebase対応 (iOS)
 Firebaseを使用していてかつ環境ごとにプロジェクトを分ける場合は、`GoogleService-Info.plist` を環境ごとに使い分ける必要があります。
 
 :::message
 Firebaseを使用していない場合や、環境ごとにFirebaseプロジェクトを分けない場合は読み飛ばしてください。
 :::
 
-### `ios` ディレクトリに各環境（Flavor）と同名のディレクトリ（フォルダ）を作成。
+#### `ios` ディレクトリに各環境（Flavor）と同名のディレクトリ（フォルダ）を作成。
 - `ios/dev/` , `ios/stg/` , `ios/prod/`
 
 各Firebaseプロジェクトに作ったiOSアプリ用の `GoogleService-Info.plist` をそれぞれのディレクトリに配置します。
@@ -528,13 +530,13 @@ Firebaseを使用していない場合や、環境ごとにFirebaseプロジェ�
 
 ![](/images/separating-environments-in-flutter/select-googleservice-info-plist-to-build-phases.png)
 
-### `.gitignore` ファイルに追加
-`ios/Runner/GoogleService-Info.plist` は、ビルド時に生成されてFLAVORにより内容が変わるので、Git管理対象外にします。
+#### `.gitignore` ファイルに `GoogleService-Info.plist` 追加
+`ios/Runner/GoogleService-Info.plist` は、ビルド時に生成されて環境により内容が変わるので、Git管理対象外にします。
 ```diff gitignore:.gitignore
 + **/ios/Runner/GoogleService-Info.plist
 ```
 
-# macOS対応
+## macOS対応
 macOSの対応は、ほとんどiOSと同じです。
 `ios` ディレクトリを `macos` ディレクトリに読み替えて同じように実行してください。
 
@@ -542,8 +544,6 @@ macOSの対応は、ほとんどiOSと同じです。
 
 - iOSの `Debug.xcconfig` は、macOSでは `Flutter-Debug.xcconfig` という名前です
 - iOSの `Release.xcconfig` は、macOSでは `Flutter-Release.xcconfig` という名前です
-
-# さいごに
 
 ## Flutterアプリを起動して、Flavorがきちんと伝わっているか確かめる
 `--dart-define-from-file` がきちんとネイティブに伝わり、アプリ名やBundle IDがFlavorごとに変更されていることを手軽に確かめるためには、 `package_info_plus` パッケージを使用します。
@@ -558,6 +558,9 @@ https://pub.dev/packages/package_info_plus
 - `.packageName`
   - iOS: Bundle ID (`CFBundleIdentifier`)
   - Android: `applicationId`
+
+# さいごに
+最後まで読んでいただきありがとうございました😊
 
 ## 宣伝
 
