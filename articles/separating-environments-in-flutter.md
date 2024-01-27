@@ -1,7 +1,7 @@
 ---
-title: "Dart-define-from-fileを使って開発環境と本番環境を分ける"
+title: "【Flutter 3.17対応】Dart-define-from-fileを使って開発環境と本番環境を分ける"
 emoji: "🔨"
-type: "tech" # tech: 技術記事 / idea: アイデア
+type: "tech"
 topics: [flutter, flavor, dart, firebase]
 published: true
 publication_name: "altiveinc"
@@ -10,11 +10,11 @@ publication_name: "altiveinc"
 Flutter 3.16 までは、 `dart-define-from-file` で定義した環境変数が、iOSやAndroidで使用できていました。
 ところが、この動作は意図せず `dart-define` の動作とも一致しないため、 Flutter 3.17 以降で無効になるようです。
 
-本日（1月27日）、Flutter 3.19.0 (beta) 版で動作確認しつつ、必要な対応を弊社のテンプレートリポジトリに追加しました。
+Flutter 3.19.0-0.3.pre (beta) 版で動作確認しつつ、必要な対応を弊社のテンプレートリポジトリに追加しました。
 追加対応を行ったプルリクエスト（コミット）はこちらです。
 https://github.com/altive/flutter_app_template/pull/321/commits
 
-あわせて、こちらの記事も、3.17以降で必要な対応を含めた内容に更新しました。
+あわせて、こちらの記事も、3.17以降に必要な対応を含めた内容に更新しました👌
 :::
 
 | 開発環境 | ステージング環境 | 本番環境 |
@@ -262,10 +262,10 @@ Dart-define をデコードして受け取ります。
 
 ```groovy:android/app/build.gradle
 // dart-define を入れる変数を宣言しています。
-def dartEnvironmentVariables = [:];
+def dartDefines = [:];
 if (project.hasProperty('dart-defines')) {
     // カンマ区切りかつBase64でエンコードされている dart-defines をデコードして変数に格納します。
-    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+    dartDefines = dartDefines + project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
             def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
@@ -282,8 +282,8 @@ if (project.hasProperty('dart-defines')) {
      targetSdkVersion flutter.targetSdkVersion
      versionCode flutterVersionCode.toInteger()
      versionName flutterVersionName
-+     applicationId "${dartEnvironmentVariables.appId}"
-+     resValue "string", "app_name", "${dartEnvironmentVariables.appName}"
++     applicationId "${dartDefines.appId}"
++     resValue "string", "app_name", "${dartDefines.appName}"
  }
 ```
 
@@ -303,25 +303,24 @@ if (project.hasProperty('dart-defines')) {
 `flutter_launcher_icons` パッケージを使って環境ごとのアイコンを作成しておきます。
 `src/{flavor}/res` ディレクトリに複数の `mipmap-xxx` ディレクトリがあり、 `ic_launcher.png` が生成されています。
 
-環境により、これらのアイコンを切り替えたいため、 `build.gradle` に以下を追記します。
+環境により、これらのアイコンを切り替えたいため、 `build.gradle` の `android.sourceSets` を編集します。
+（[@kurogoma4d さん、ご教示ありがとうございます！](https://zenn.dev/link/comments/e0ae923d2517ce)）
 
 ```diff groovy:android/app/build.gradle
-task copySources(type: Copy) {
-    from "src/${dartEnvironmentVariables.flavor}/res"
-    into 'src/main/res'
-}
-tasks.whenTaskAdded { task ->
-    task.dependsOn copySources
-}
+android {
+    compileSdkVersion flutter.compileSdkVersion
+
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            res.srcDirs = ['src/main/res', "src/${dartDefines.flavor}/res"]
+        }
+    }
+...
 ```
 
-ビルド時に{flavor}ディレクトリの `res` を `src/main/res` にコピーされるようにしました。
-
-## `.gitignore` ファイルに追加
-`android/app/src/main/res/mipmap*/` は、ビルド時に生成されてFLAVORにより内容が変わるので、Git管理対象外にします。
-```diff gitignore:.gitignore
-+ **/android/app/src/main/res/mipmap*/
-```
+`res.srcDirs` を指定し、 `src/main/res` と `src/{flavor}/res` をマージしています。
+この時、この2つのディレクトリに同じファイルが存在するとエラーになるので、2箇所に同じファイルが存在しないようにしましょう。
 
 ## Firebase対応 (Android)
 :::message
@@ -337,7 +336,7 @@ Firebaseを使用していない場合や、環境ごとにFirebaseプロジェ�
 環境別ディレクトリに配置した `google-services.json` を `android/app` にコピーするタスクを定義しています。
 ```groovy:android/app/build.gradle
 task selectGoogleServicesJson(type: Copy) {
-    from "src/${dartEnvironmentVariables.flavor}/google-services.json"
+    from "src/${dartDefines.flavor}/google-services.json"
     into './'
 }
 
