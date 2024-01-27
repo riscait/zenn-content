@@ -11,6 +11,8 @@ publication_name: "altiveinc"
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
+![](/images/ProfileBanner_Muramatsu.jpg)
+
 この記事は、 [Go 言語 Advent Calendar 2023 | Qiita](https://qiita.com/advent-calendar/2023/go) 17日目の記事です🚀
 
 弊社では、Flutterアプリだけでなく、サーバーサイドも自前で作る方針となりました。

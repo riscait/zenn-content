@@ -9,6 +9,8 @@ publication_name: "altiveinc"
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
+![](/images/ProfileBanner_Muramatsu.jpg)
+
 この記事は「[Flutter Advent Calendar 2021](https://qiita.com/advent-calendar/2021/flutter)」23日目の記事です。
 
 5日前に `v1.0.0` がリリースされた「Melos」という、

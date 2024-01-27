@@ -8,6 +8,8 @@ publication_name: "altiveinc"
 ---
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
+![](/images/ProfileBanner_Muramatsu.jpg)
+
 日中は企業でiOSアプリのネイティブ開発を、個人ではFlutter x Firebaseで iOS & Androidアプリを作っています。
 
 @[tweet](https://twitter.com/riscait/status/1308171643089379329)

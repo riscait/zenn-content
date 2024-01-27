@@ -21,6 +21,8 @@ FVM 3.0.0 はまだBeta版のPre-releaseです。
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
+![](/images/ProfileBanner_Muramatsu.jpg)
+
 2年前に「[FVMでFlutter SDKのバージョンをプロジェクト毎に管理する](https://zenn.dev/altiveinc/articles/flutter-version-management)」という記事を書きました。（もうそんな経ったの…⁉️）
 
 それからずっとFVMを使っていますが、v3.0.0-beta (Pre-release)がリリースされているので使ってみました！

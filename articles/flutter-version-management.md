@@ -13,6 +13,8 @@ https://zenn.dev/altiveinc/articles/flutter-version-management-3
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
+![](/images/ProfileBanner_Muramatsu.jpg)
+
 Flutter SDKのバージョン管理ツールであるFVM（Flutter Version Management）をご紹介します。
 
 https://fvm.app/
