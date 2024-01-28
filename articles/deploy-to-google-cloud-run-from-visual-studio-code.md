@@ -5,9 +5,8 @@ type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [cloudrun, vscode, gcp]
 published: true
 publication_name: "altiveinc"
+# cSpell:ignore Frun Fprojects Flocations Fservices
 ---
-? cspell:ignore Frun Fprojects Flocations Fservices
-
 # 概要
 
 IDE向けに提供されている拡張機能である「Google Cloud Code」のVS Code版を使い、
