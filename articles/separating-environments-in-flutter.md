@@ -5,6 +5,7 @@ type: "tech"
 topics: [flutter, flavor, dart, firebase]
 published: true
 publication_name: "altiveinc"
+# cSpell:ignore kurogoma4d
 ---
 :::message
 Flutter 3.16 までは、 `dart-define-from-file` で定義した環境変数が、iOSやAndroidで使用できていました。
@@ -306,7 +307,7 @@ if (project.hasProperty('dart-defines')) {
 `src/{flavor}/res` ディレクトリに複数の `mipmap-xxx` ディレクトリがあり、 `ic_launcher.png` が生成されています。
 
 環境により、これらのアイコンを切り替えたいため、 `build.gradle` の `android.sourceSets` を編集します。
-（[@kurogoma4d さん、ご教示ありがとうございます！](https://zenn.dev/link/comments/e0ae923d2517ce)）
+（@kurogoma4d さん、[コメント](https://zenn.dev/link/comments/e0ae923d2517ce)）ありがとうございました！
 
 ```diff groovy:android/app/build.gradle
 android {
@@ -435,7 +436,7 @@ https://qiita.com/shisama/items/5f4c4fa768642aad9e06
 ```diff:ios/Flutter/release.xcconfig
  #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
  #include "Generated.xcconfig"
-+ #include "DartDefines.xcconfig"
++ #include "Dart-Defines.xcconfig"
 ```
 
 ### `.gitignore` ファイルに `Dart-Defines.xcconfig` を追加
@@ -443,6 +444,11 @@ https://qiita.com/shisama/items/5f4c4fa768642aad9e06
 ```diff:.gitignore
 + **/ios/Flutter/Dart-Defines.xcconfig
 ```
+
+:::message
+iOSでは `Generated.xcconfig`, macOSでは `Flutter-Generated.xcconfig` が生成され、これらのファイルに書き込めば手間が減りますが、今回は使用しませんでした。
+https://x.com/riscait/status/1751541002417086467?s=20
+:::
 
 ### アプリ表示名を環境によって変える
 `ios/Runner/Info.plist` を編集します。
