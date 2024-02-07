@@ -100,7 +100,7 @@ https://firebase.google.com/docs/flutter/setup?hl=ja
 flavor="dev"
 appName="FAT dev"
 appId="jp.co.altive.fat.dev"
-googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx",
+googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx"
 ```
 
 同じように環境数分のファイルを作成しましょう。
@@ -109,14 +109,14 @@ googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx",
 flavor="stg"
 appName="FAT stg"
 appId="jp.co.altive.fat.stg"
-googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx",
+googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx"
 ```
 
 ```env:dart_defines/prod.env
 flavor="prod"
 appName="FAT"
 appId="jp.co.altive.fat"
-googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx",
+googleReversedClientId="com.googleusercontent.apps.0123456789-xxxxxxxxxxxxxxxx"
 ```
 
 :::message
