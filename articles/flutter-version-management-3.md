@@ -1,5 +1,5 @@
 ---
-title: "FVM 3.0.0-beta を使ってみた（Flutter Version Management）"
+title: "FVM 3.0.0を使ってみた（Flutter Version Management）"
 emoji: "🔄"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [flutter, fvm]
@@ -8,8 +8,9 @@ publication_name: "altiveinc"
 # cSpell:words fvmrc yourrank
 ---
 :::message alert
-FVM 3.0.0 はまだBeta版のPre-releaseです。
-安定版が正式リリースされたら、改めてこの記事を更新する予定です🚀
+[FVM 3.0.0](https://github.com/leoafarias/fvm/releases/tag/3.0.0)がリリースされました🚀（Homebrewではまだv3が配信されていません）
+この記事はBeta版を使用して書いたものですが、今のところ更新が必要な箇所はほとんどなさそうです👀
+
 :::
 
 :::message
