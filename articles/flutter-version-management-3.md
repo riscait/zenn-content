@@ -8,9 +8,9 @@ publication_name: "altiveinc"
 # cSpell:words fvmrc yourrank
 ---
 :::message alert
-[FVM 3.0.0](https://github.com/leoafarias/fvm/releases/tag/3.0.0)がリリースされました🚀（Homebrewではまだv3が配信されていません）
-この記事はBeta版を使用して書いたものですが、今のところ更新が必要な箇所はほとんどなさそうです👀
-
+[FVM 3.0.0](https://github.com/leoafarias/fvm/releases/tag/3.0.0)がリリースされました🚀
+Homebrewでインストール済みの方は `brew upgrade fvm` でアップデート可能です🍺
+この記事はBeta版を使用して書いたものですが、変更はなかったようです👀
 :::
 
 :::message
