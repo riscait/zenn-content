@@ -1,5 +1,5 @@
 ---
-title: "【v5.2対応】Melosでモノレポ管理"
+title: "【v5.2対応】MelosでDart/Flutterのモノレポ管理"
 emoji: "🌋"
 type: "tech"
 topics: [melos, dart, flutter, cli]
