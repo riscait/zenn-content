@@ -18,7 +18,7 @@ publication_name: "altiveinc"
 https://zenn.dev/altiveinc/articles/melos-for-multiple-packages-dart-projects
 
 
-もう `v5.1` がリリースされたとのことで進化を感じますね…！
+もう `v5.2` がリリースされたとのことで進化を感じますね…！
 
 弊社でもいくつかのアプリプロジェクトでMelosを使ったモノレポ運用を行っております。
 
@@ -121,7 +121,7 @@ dependencies:
 $ dart pub global activate melos
 
 $ melos --version
-5.1.0
+5.2.0
 ```
 
 ## melos.yaml ファイルの作成
@@ -150,7 +150,7 @@ environment:
   sdk: ^3.3.0 # このワークスペースで使用したいDartのバージョン
 
 dev_dependencies:
-  melos: ^5.1.0 # このワークスペースで使用したいMelosのバージョン
+  melos: ^5.2.0 # このワークスペースで使用したいMelosのバージョン
 ```
 
 指定したMelosのバージョンがワークスペース使用されます。
@@ -232,7 +232,7 @@ command:
 melos exec -- "flutter pug get"
 ```
 
-繰り返し使うコマンドは、 `exec` コマンドではなく後述の `scripts` を定義し、`melos run` コマンドで簡単に呼び出せるようにしましょう👌
+繰り返し使うコマンドは、 `exec` コマンドを都度打って実行するのではなく、後述の `scripts` を定義し、`melos run` コマンドで簡単に呼び出せるようにしましょう👌
 
 :::message
 `melos exec` と 実行したいコマンドを区切る `--` は、 "Double Dash` と呼ばれる、コマンドラインオプションのスキャン終了を示すためのものです。
@@ -241,7 +241,7 @@ https://www.wikitechy.com/technology/double-dash-mean-also-known-bare-double-das
 
 https://melos.invertase.dev/commands/exec
 
-### concurrency (-c)
+### --concurrency (-c)
 同時にコマンドを実行するパッケージの最大数を定義します。デフォルト数は実行プラットフォームにより異なります。
 ```shell
 # パッケージ1つずつ順番にコード生成実行を行いたい場合
@@ -250,7 +250,7 @@ melos exec -c 1 -- "flutter pub run build_runner build -d"
 melos exec -c 8 -- "flutter pub run build_runner watch -d"
 ```
 
-### fail-fast
+### --fail-fast
 いずれかのパッケージでスクリプトが失敗した場合に、それ以降のパッケージでスクリプトを実行しないようにします。
 デフォルトはfalseです。
 
@@ -294,11 +294,12 @@ https://melos.invertase.dev/commands/publish
 `melos.yaml` の `scripts:` に定義したスクリプトを実行します。
 
 以下の定義例では、すべてのパッケージで `dart fix` を実行する `fix` という名前のスクリプトを定義しています。
+（より簡潔な書き方があるのですが、それは後述します）
 
 ```yaml:melos.yaml
 scripts:
   fix:
-    run: melos exec -- dart fix --apply lib
+    run: melos exec -- "dart fix --apply lib"
 ```
 
 このスクリプトを使用する際は、

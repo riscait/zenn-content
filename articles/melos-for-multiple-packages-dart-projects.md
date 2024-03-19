@@ -7,6 +7,12 @@ published: true
 publication_name: "altiveinc"
 ---
 
+:::message alert
+この記事はv1.0.0という古いバージョンのMelosについての記事です。
+最新のMelosに関しては、以下の記事をご覧ください。
+https://zenn.dev/altiveinc/articles/melos-for-managing-dart-projects
+:::
+
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 ![](/images/ProfileBanner_Muramatsu.jpg)
