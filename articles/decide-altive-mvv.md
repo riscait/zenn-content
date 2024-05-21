@@ -74,7 +74,20 @@ Mission, Vision, Valuesそれぞれ1時間強ずつ、3日間ほどかけて、�
 
 引き続き、オルティブ株式会社をよろしくお願いいたします🚀
 
-## あとがき
+## その他
+
+### MVVの掲載箇所
+
+今回定めたMission, Vision, Valuesは、オルティブのホームページとハンドブックに掲載しています。
+
+- https://handbook.altive.co.jp/company/mission/
+- https://handbook.altive.co.jp/company/vision/
+- https://handbook.altive.co.jp/company/values/
+
+- https://altive.co.jp/about
+- https://altive.dev/about
+
+あまり多くの場所に掲載しても、変更があった際に追従が難しくなるので絞らないとかもしれないですね。
 
 ### 創業当初のMission/Values
 
@@ -91,3 +104,16 @@ Mission, Vision, Valuesそれぞれ1時間強ずつ、3日間ほどかけて、�
 - Embrace changes（変化を受け入れる）
 - Trial and Error（試行錯誤）
 
+## 自社アプリ紹介🌱「めでた！ - 家庭菜園を始めよう」
+
+先月、オルティブ株式会社が開発・運営する家庭菜園アプリ「めでた！」をリリースしました🌱
+
+育てた家庭菜園のようすを撮りためて、タイムラプスを作成することができます📸
+
+家庭菜園のお供に使ってみてください！
+
+### App Store
+https://apps.apple.com/jp/app/id6479965558
+
+### Google Play
+https://play.google.com/store/apps/details?id=jp.co.altive.medeta
