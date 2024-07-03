@@ -320,6 +320,10 @@ task copySources(type: Copy) {
     from "src/${dartDefines.flavor}/res"
     into 'src/main/res'
 }
+
+tasks.whenTaskAdded { task ->
+   task.dependsOn copySources
+}
 ```
 
 ビルド時に環境ごとのディレクトリ内の `res` を `src/main/res` にコピーしています。
@@ -433,7 +437,7 @@ done
 ### XcodeのBuild Pre-actions に作成したスクリプトを登録する
 1. Xcodeで、Product > Scheme > Edit Scheme (⌘ ⇧ <)を開きます
 1. XcodeのScheme (Runner) をクリックして `Edit scheme` -> Build を展開して `Pre-actions` を選択します
-1. 「＋」ボンタンを押して「New Run Script Action」を選択します。
+1. 「＋」ボタンを押して「New Run Script Action」を選択します。
 1. 「Provide build settings from」は `Runner` を選択します。
 1. 先ほど保存したファイルのパスである `${SRCROOT}/scripts/extract_dart_defines.sh` を書き込みます。
 
