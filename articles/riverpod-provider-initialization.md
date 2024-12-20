@@ -5,7 +5,16 @@ type: "tech"
 topics: [flutter,dart,riverpod]
 published: true
 publication_name: "altiveinc"
+# cSpell:ignore Kosuke Saigusa
 ---
+
+:::message
+この記事は「[Flutter Advent Calendar 2024](https://qiita.com/advent-calendar/2024/flutter)」21日目の記事です🎄
+
+20日目： [Flutter の AppBar の中の画像が指定したサイズで表示されない](https://zenn.dev/blendthink/articles/84f841e5df36a5) by [おかやまん](https://zenn.dev/blendthink)さん
+21日目： 非同期初期化が必要なRiverpodプロバイダの初期化方法 by 村松龍之介 ← 今ここ
+22日目： by [Kosuke Saigusa](https://qiita.com/KosukeSaigusa)さん
+:::
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[オルティブ株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
@@ -25,6 +34,10 @@ Riverpodは、これらのデータを簡潔かつ安全に扱うための強力
 社内でのLT発表として本記事をまとめたスライドを作成しました。サラッと確認するにはこちらの方が早いかもしれません。
 
 https://www.figma.com/deck/WoqYolvCzNzWTMycHssSci/
+
+:::message alert
+ただし、「文字とコードが多く、スライドとしては読みにくい」と妻にダメ出しを受けた程度の出来です🥹
+:::
 
 ## 初期処理に非同期処理が必要なプロバイダの課題
 
