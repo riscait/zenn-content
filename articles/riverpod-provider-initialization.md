@@ -12,8 +12,8 @@ publication_name: "altiveinc"
 この記事は「[Flutter Advent Calendar 2024](https://qiita.com/advent-calendar/2024/flutter)」21日目の記事です🎄
 
 20日目： [Flutter の AppBar の中の画像が指定したサイズで表示されない](https://zenn.dev/blendthink/articles/84f841e5df36a5) by [おかやまん](https://zenn.dev/blendthink)さん
-21日目： 非同期初期化が必要なRiverpodプロバイダの初期化方法 by 村松龍之介 ← 今ここ
-22日目： by [Kosuke Saigusa](https://qiita.com/KosukeSaigusa)さん
+21日目： 非同期初期化が必要なRiverpodプロバイダの初期化方法 by [村松龍之介](https://x.com/riscait) ← 今ここ
+22日目： [Pub workspaces (monorepos support) を触ってみた](https://zenn.dev/kosukesaigusa/articles/dart-pub-workspaces) by [Kosuke Saigusa](https://x.com/KosukeSaigusa)さん
 :::
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[オルティブ株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
