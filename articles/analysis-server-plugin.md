@@ -1,5 +1,5 @@
 ---
-title: "custom_lintからanalysis_server_pluginへ書き換えてみた [altive_lints]"
+title: "altive_lintsのcustom_lint製ルールとアシスト機能をanalysis_server_pluginへ移行してみた"
 emoji: "🧵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["dart", "flutter"]
@@ -10,70 +10,72 @@ published: true
 
 ![](/images/ProfileBanner_Muramatsu.jpg)
 
+この記事では、altive_lints で提供しているカスタムルール／アシストを custom_lint から analysis_server_plugin へ移行した背景と手順をまとめました。
+
 # はじめに
 
 弊社は [altive_lints](https://pub.dev/packages/altive_lints) というリントパッケージを公開しています。 
 
-Dartが提供している通常のリントルールの他に、独自のルールを custom_lint で作成して提供していました。
+Dart が提供する標準ルールにくわえて、custom_lint を使った独自ルールやアシストを追加していました。
 
-参考までに以下のルールがあります。
+参考までに提供中のルールとアシストを一部紹介します。
 
 :::details altive_lintsのルールとアシスト一覧
 
 **カスタムリントルール**
-
-- avoid_consecutive_sliver_to_box_adapter
-- avoid_hardcoded_color
-- avoid_hardcoded_japanese
-- avoid_shrink_wrap_in_list_view
-- avoid_single_child
-- prefer_clock_now
-- prefer_dedicated_media_query_methods
-- prefer_space_between_elements
-- prefer_to_include_sliver_in_name
+- `avoid_consecutive_sliver_to_box_adapter`: `SliverToBoxAdapter` の連続使用を避ける。
+- `avoid_hardcoded_color`: ハードコーディングされた `Color` を検出する。
+- `avoid_hardcoded_japanese`: ハードコーディングされた日本語文字列を検出する。
+- `avoid_shrink_wrap_in_list_view`: `ListView` 内での過剰な `shrinkWrap` を防ぐ。
+- `avoid_single_child`: 子要素が 1 つだけの `MultiChildRenderObjectWidget` を検出する。
+- `prefer_clock_now`: `DateTime.now()` の代わりに `clock.now()` を推奨する。
+- `prefer_dedicated_media_query_methods`: `MediaQuery` の専用メソッド利用を促す。
+- `prefer_space_between_elements`: 行間に空行を挟んで読みやすさを保つ。
+- `prefer_to_include_sliver_in_name`: `Sliver` を返す Widget 名に `Sliver` を含める。
 
 **Quick fixで使えるアシスト機能**
 
-- add_macro_template_documentation
-- add_macro_documentation_comment
-- wrap_with_macro_template_documentation_comment
+- `add_macro_template_documentation`: クラス定義に Macro テンプレート付き Doc コメントを挿入。
+- `add_macro_documentation_comment`: コンストラクタやメソッドに Doc コメントを挿入。
+- `wrap_with_macro_template_documentation_comment`: 既存 Doc コメントを Macro テンプレートで包む。
 :::
 
-今回はこれらのルールとアシスト機能を custom_lint から analysis_server_plugin に書き換えてみた話です。
+今回はこれらのルールとアシスト機能の実装を `custom_lint` から `analysis_server_plugin` に書き換えてみた話です。
 
 # 用語整理
 
-| パッケージ名               | レイヤー / 分類                       | 実装時の関わり方（重要）                                                                                                                                                                                                                                   |
-| :------------------------- | :------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Analyzer Plugin**        | **概念・アーキテクチャ**              | 「Analysis Serverが外部機能を動かす仕組み」そのものの名前。                                                                                                                                                                                                |
-| **analyzer_plugin**        | **共通言語 (型定義)**<br>& プロトコル | **【必須】 データ型を使う。**<br>`analyzer_plugin/utilities` にある型定義等をプラグインを作る際にインポートして使う。                                                                                                                                      |
-| **custom_lint**            | **高機能ライブラリ**                  | RiverpodやFreezedの作者であるRemi氏 ([Invertase](https://invertase.io/)) が作成したパッケージ。<br>analyzer_pluginに似ているが、より優れた開発者エクスペリエンスを提供することを目指したサードパーティーパッケージ。<br>組み込みのテストメカニズムもある。 |
-| **analysis_server_plugin** | **公式標準実装**                      | **公式標準ツール** `Plugin`クラスなどを提供する。Dart 3.10以上が必要                                                                                                                                                                                       |
+| パッケージ名 | レイヤー / 分類 | 実装時の関わり方 |
+| :-- | :-- | :-- |
+| **Analyzer Plugin** | **概念・アーキテクチャ** | Analysis Server が外部機能を実行できる仕組みそのものの呼び名。 |
+| **analyzer_plugin** | **型定義 & プロトコル** | プラグイン実装に必要なデータ型やユーティリティを提供するパッケージ。 |
+| **custom_lint** | **サードパーティ製フレームワーク** | Remi 氏 ([Invertase](https://invertase.io/)) が提供。DX が高く、テストメカニズムも備わっている。 |
+| **analysis_server_plugin** | **公式実装** | Dart チーム提供の標準プラグイン基盤。`Plugin` クラス等を備え、Dart 3.10+ が必要。 |
 
 :::message
-自身、理解を整理するために表にしましたが、いまいち自信がありません…
+呼称が似ていて混乱しやすいので、個人メモとして整理しました。
 :::
 
 # custom_lint から analysis_server_plugin へ移行するかの判断
 
 - 新しいAnalyzer Pluginが開発されるときに、「（Analyzer Pluginが）数ヶ月でリリースされるなら custom_lint の積極的な開発に取り掛からない」という発言を見ました。
-その後、「数ヶ月後には公開予定だよ」という旨の返答がありました。
-- [riverpod_lint](https://pub.dev/packages/riverpod_lint) も custom_lint から Analyzer Plugin へ移行するためのプルリクエストがDraftですが存在します。（[Migrate away from custom_lint](https://github.com/rrousselGit/riverpod/pull/4413)）
+その後、「数ヶ月後には公開予定だよ」という旨の返答があったのを見ました。（要出典！）
+- [riverpod_lint](https://pub.dev/packages/riverpod_lint) も custom_lint から analysis_server_plugin へ移行するためのプルリクエストがDraftですが存在します。（[Migrate away from custom_lint](https://github.com/rrousselGit/riverpod/pull/4413)）
 - custom_lint を使ったパッケージでカスタムリントルールを提供した場合、利用側（アプリ等）でも custom_lint に依存する必要があります。
-analysis_server_plugin製であれば、それは不要なのでありがたいですね。
-`analyzer` のバージョンを他のパッケージと揃えたりといったことは引き続き必要ですが…
+analysis_server_plugin製であれば、それは不要です。
+
+こうした背景から、altive_lints も公式プラグインベースへ移行し、依存関係をシンプルに保つ方針に決めました。
 
 # analysis_server_plugin でプラグインを作成する（カスタムルール・アシスト）
 
-というわけで、 altive_lints は custom_lint から analysis_server_plugin へ移行してみることにしました！
+ここからは、altive_lints のルール／アシストを analysis_server_plugin ベースへ移す際に実施した手順を順番に紹介します。
+
+以下、 altive_lintsパッケージでの移行フローをなぞりながら説明してみます。
 
 ## 依存パッケージのインストール
 
-### pubspec.yaml
-
 `custom_lint` と `custom_lint_builder` を削除し、 `analysis_server_plugin` などを追加しました。
 
-```yaml
+```yaml:pubspec.yaml
 environment:
   sdk: ^3.10.0
 
@@ -91,26 +93,25 @@ dev_dependencies:
 
 ### [analysis_server_plugin](https://pub.dev/packages/analysis_server_plugin)
 
-> This package offers support for writing Dart analysis server plugins.
-Analysis server plugins empower developers to contribute their own Dart static analysis in IDEs and at the command line via dart analyze and flutter analyze. Analysis server plugins can offer the following static analyses:
-このパッケージは、Dart analysis server plugin の作成を支援します。
-開発者は IDE 内やコマンドラインの dart analyze や flutter analyze を通じて独自の「Dart静的解析」を提供できます。
+> This package offers support for writing Dart analysis server plugins. Analysis server plugins empower developers to contribute their own Dart static analysis in IDEs and at the command line via dart analyze and flutter analyze.
 
-このパッケージを使って、Rule, Fixes, Assist をPluginとして作成します。
+IDE／CLI 双方で動く静的解析プラグインを公式サーバー上で動かすためのライブラリです。ルール（AnalysisRule）、Fixes、Assist をここで提供される `Plugin` クラスを介して登録します。
 
 ### テスト系パッケージ
 
-可能な限り単体テストも書きたかったので以下のパッケージを追加しました。
+ルールやアシストの振る舞いを自動テストしたかったので、下記 2 つも採用しました。
 
-- [analyzer_testing](https://pub.dev/packages/analyzer_testing)
-- [test_reflective_loader](https://pub.dev/packages/test_reflective_loader)
+- [analyzer_testing](https://pub.dev/packages/analyzer_testing): analyzer／analysis_server_plugin 系のテストユーティリティを提供。
+- [test_reflective_loader](https://pub.dev/packages/test_reflective_loader): リフレクションでテストスイートを検出・実行できる。
+
+この組み合わせにより、ルールを単体テストに近い書き味で検証できています。
 
 ## main.dartでプラグインを作成
 
 まずは、後ほど作成するルールやアシスト機能を登録し、提供するためのプラグインを作成します。
 
 custom_lint では `altive_lints.dart` のようにパッケージと同名のDartファイルを作成しましたが、
-analysis server pluginでは `main.dart` でプラグインを作成します。
+analysis server pluginでは `main.dart` でプラグインを作成するようなので、`main.dart` を新規作成しました。
 
 ```dart:main.dart
 import 'dart:async';
@@ -196,9 +197,12 @@ class _Visitor extends SimpleAstVisitor<void> {
 
 ### プラグインにルールを登録
 
-前項で作ったルールをプラグインに登録しましょう。
+作ったルールをプラグインに登録しましょう。
 
-登録方法として、 `registry.registerWarningRule` と `registry.registerLintRule` があります。
+ルールの登録方法として、以下の２種類があります。
+
+- `registry.registerWarningRule` 
+- `registry.registerLintRule` 
 
 ```dart:main.dart
 @override
@@ -216,9 +220,10 @@ Future<void> register(PluginRegistry registry) async {
 少々つまりました。 `registerLintRule` で登録することで、プラグイン利用側で個別に無効化できるようになりました。
 :::
 
-### Ruleを明示的に有効化する
+### 登録したルールを明示的に有効化する
 
-前項でルールを `registerLintRule` で登録したことにより、デフォルトでは無効となっています。
+ルールを `registerLintRule` で登録したことにより、デフォルトでは無効となっています。
+
 アプリ等のプラグイン利用側で `include: package:altive_lints/altive_lints.yaml` を指定するだけで、ルールが使えるようにしたいです。
 
 なので、下記のように `altive_lints.yaml` でルールを明示的に有効化しました。
@@ -242,6 +247,7 @@ plugins:
 ## アシスト（ResolvedCorrectionProducer）の作成
 
 次はアシストを作成します。
+
 Quick Fixで候補が出てきて、それを適用することでコードに修正を加えることができる機能です。
 
 `add_macro_document_comment` という、コンストラクタやメソッドにDoc Commentを挿入するアシストを例に説明します。
