@@ -1,24 +1,31 @@
 ---
-title: "altive_lintsのcustom_lint製ルールとアシスト機能をanalysis_server_pluginへ移行してみた"
+title: "altive_lintsのcustom_lint製ルールとアシストをAnalyzer Pluginsに移行してみた"
 emoji: "🧵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["dart", "flutter"]
 published: true
+# cSpell:ignore remi yniji
 ---
+
+:::message
+この記事は「[Flutter Advent Calendar 2025](https://qiita.com/advent-calendar/2025/flutter)」6日目の記事です🎄
+
+5日目： [[AI x Flutter] Claudeと伴にFlutterアプリを開発してAIがどこまでできるか試してみた](https://qiita.com/yniji/items/c9739de29d9b3a53b05a) by [yniji](https://twitter.com/creativewebjp))さん
+6日目： altive_lintsでcustom_lint製カスタムルールをanalysis_server_pluginへ移した理由と工夫 by [村松龍之介](https://x.com/riscait) ← 今ここ
+7日目： 「タイトル未定」 by [朝日 大樹さん](https://twitter.com/daiki1003)さん
+:::
 
 こんにちは、Flutterでのアプリ開発をメインとしている「[Altive株式会社](https://altive.co.jp)」の村松龍之介（[@riscait](https://x.com/riscait)）です！
 
 ![](/images/ProfileBanner_Muramatsu.jpg)
 
-この記事では、altive_lints で提供しているカスタムルール／アシストを custom_lint から analysis_server_plugin へ移行した背景と手順をまとめました。
+この記事では、altive_lints で提供しているカスタムルール／アシストを custom_lint から analysis_server_plugin を使った Analyzer Plugins へ移行した背景と手順をまとめました。
 
 # はじめに
 
-弊社は [altive_lints](https://pub.dev/packages/altive_lints) というリントパッケージを公開しています。 
+オルティブ株式会社は [altive_lints](https://pub.dev/packages/altive_lints) というリントパッケージを公開しています。
 
-Dart が提供する標準ルールにくわえて、custom_lint を使った独自ルールやアシストを追加していました。
-
-参考までに提供中のルールとアシストを一部紹介します。
+Dart が提供する標準ルールに加えて custom_lint ベースの独自ルールやアシストも同梱していました。どんな内容か簡単に以下にまとめます。
 
 :::details altive_lintsのルールとアシスト一覧
 
@@ -67,9 +74,7 @@ analysis_server_plugin製であれば、それは不要です。
 
 # analysis_server_plugin でプラグインを作成する（カスタムルール・アシスト）
 
-ここからは、altive_lints のルール／アシストを analysis_server_plugin ベースへ移す際に実施した手順を順番に紹介します。
-
-以下、 altive_lintsパッケージでの移行フローをなぞりながら説明してみます。
+ここからは、altive_lints のルール／アシストを analysis_server_plugin ベースへ移行する際に実施した手順を順に紹介します。
 
 ## 依存パッケージのインストール
 
@@ -108,10 +113,9 @@ IDE／CLI 双方で動く静的解析プラグインを公式サーバー上で�
 
 ## main.dartでプラグインを作成
 
-まずは、後ほど作成するルールやアシスト機能を登録し、提供するためのプラグインを作成します。
+まずは、後ほど作成するルールやアシスト機能を登録する土台となるプラグインを用意します。
 
-custom_lint では `altive_lints.dart` のようにパッケージと同名のDartファイルを作成しましたが、
-analysis server pluginでは `main.dart` でプラグインを作成するようなので、`main.dart` を新規作成しました。
+custom_lint では `altive_lints.dart`（パッケージ名.dart）を置いていましたが、analysis_server_plugin ではトップレベルで `plugin` を公開する `main.dart` を作るスタイルです。そのため、新たに `main.dart` を追加しました。
 
 ```dart:main.dart
 import 'dart:async';
@@ -172,8 +176,8 @@ class PreferClockNow extends AnalysisRule {
   }
 }
 
-// ここでは、指定したノードだけを見てくれる `SimpleAstVisitor` を継承したクラスを定義します。
-// Visitor は Dartコードのツリー構造を歩き回って探索してくれる「訪問者」
+// AST 上で指定したノードだけを見てくれる `SimpleAstVisitor` を継承したクラスを定義します。
+// Visitor は Dart コードの構文木を歩き回って探索してくれる「訪問者」です。
 class _Visitor extends SimpleAstVisitor<void> {
   _Visitor(this.rule, this.context);
 
@@ -182,7 +186,7 @@ class _Visitor extends SimpleAstVisitor<void> {
 
   @override
   void visitInstanceCreationExpression(InstanceCreationExpression node) {
-    // node のコンストラクタの型と名前を取得し、 'DateTime' + `now` だった場合に報告します。
+    // コンストラクタの型と名前を取得し、`DateTime.now` なら report します。
     final constructorName = node.constructorName;
     final type = constructorName.type.name.lexeme;
     if (type != 'DateTime') {
@@ -211,22 +215,18 @@ Future<void> register(PluginRegistry registry) async {
 }
 ```
 
-`registerWarningRule` で登録すると警告ルールとなり、デフォルトで有効となります。今の所利用側で無効にする術もなさそうです。
-
-`registerLintRule` で登録するとリントルールとなり、デフォルトでは無効となります。
+`registerWarningRule` は常時オンの「警告」として登録され、利用側で個別に切り替える術がありません。
+一方で `registerLintRule` は opt-in の「lint」として登録され、利用側が `diagnostics` でオン／オフできます。
 
 :::message
-最初は `registerWarningRule` でAnalysisRuleを登録していましたが、プラグイン利用側でルールを個別に無効化できず、（falseにしても効果なし）
-少々つまりました。 `registerLintRule` で登録することで、プラグイン利用側で個別に無効化できるようになりました。
+最初は `registerWarningRule` を使っていましたが、利用側で無効化できず（`false` 指定も効果なし）詰まりました。
+`registerLintRule` に切り替えたところ、使う／使わないを明示できるようになりました。
 :::
 
 ### 登録したルールを明示的に有効化する
 
-ルールを `registerLintRule` で登録したことにより、デフォルトでは無効となっています。
-
-アプリ等のプラグイン利用側で `include: package:altive_lints/altive_lints.yaml` を指定するだけで、ルールが使えるようにしたいです。
-
-なので、下記のように `altive_lints.yaml` でルールを明示的に有効化しました。
+`registerLintRule` で登録すると利用側が明示的に有効化するまで動きません。
+`include: package:altive_lints/altive_lints.yaml` を書くだけで全部使えるようにしたかったので、`altive_lints.yaml` 内で true 指定しています。
 
 ```yaml:altive_lints.yaml
 plugins:
@@ -246,11 +246,9 @@ plugins:
 
 ## アシスト（ResolvedCorrectionProducer）の作成
 
-次はアシストを作成します。
+次はアシストです。`Quick Fix` メニューに候補が表示され、選択するとコードを挿入したり書き換える機能を提供できます。
 
-Quick Fixで候補が出てきて、それを適用することでコードに修正を加えることができる機能です。
-
-`add_macro_document_comment` という、コンストラクタやメソッドにDoc Commentを挿入するアシストを例に説明します。
+ここでは、コンストラクタやメソッドに Doc コメントを差し込む `add_macro_document_comment` を例にします。
 
 ```dart
 // `ResolvedCorrectionProducer` クラスを継承して、アシストを定義します。
@@ -282,7 +280,7 @@ class AddMacroDocumentComment extends ResolvedCorrectionProducer {
 
 ## プラグインにアシストを登録
 
-アシストは `registry.registerAssist` メソッドで登録します。
+アシストは `registry.registerAssist` で登録します。
 
 ```dart:main.dart
 @override
@@ -293,16 +291,11 @@ Future<void> register(PluginRegistry registry) async {
 }
 ```
 
-`registerAssist` メソッドは、
-`Function({required CorrectionProducerContext context}) generator)`　というパラメータを持っています。
-
-なので前項で定義したアシストクラスではパラメータで context を受け取るように定義したのでした。
-
-アシストクラスのコンストラクタ引数にそのまま渡せば良いので `.new` を使っています。
+`registerAssist` は `{required CorrectionProducerContext context}` を受け取るファクトリ関数を渡す仕様なので、アシストクラスのコンストラクタも `context` を受ける形にして `.new` をそのまま渡しました。
 
 ## プラグインの有効化
 
-[Ruleを明示的に有効化する](#ruleを明示的に有効化する) にて、プラグイン自体も有効化済みですが、
+[登録したルールを明示的に有効化する](#登録したルールを明示的に有効化する) にて、プラグイン自体も有効化済みですが、
 プラグインを有効化するためには以下の記述が必要なので追加してあります。
 
 ```yaml:altive_lints.yaml
@@ -323,7 +316,7 @@ dev_dependencies:
   altive_lints: ^2.0.0-dev.2
 ```
 
-`dev_dependencies` には altive_lints のみ追加すれば良くなったのでシンプルになりました。
+custom_lint を直接入れる必要がなくなり、`dev_dependencies` は altive_lints だけで済むようになりました。
 
 ### analysis_options.yaml で altive_lints をインクルード
 
@@ -331,11 +324,10 @@ dev_dependencies:
 include: package:altive_lints/altive_lints.yaml
 ```
 
-altive_lints.yaml にて、プラグインを有効化してあるので、利用側の analysis_options.yaml 側では不要です。
+`altive_lints.yaml` にはプラグイン有効化とルール有効化済みなので、利用側では `include` するだけで OK です。
 
-逆にいうと、`altive_lints` を include せずPluginだけ使いたい場合は、以下のようにplugins指定が必要かと思われます。
+逆に、Plugin だけ使いたい／設定を細かく書きたい場合は `plugins` セクションに `altive_lints` を追加します。
 
-例：
 ```yaml:analysis_options.yaml
 include: package:flutter_lints/flutter_lints.yaml
 plugins:
@@ -344,7 +336,7 @@ plugins:
 
 ### ルールを個別に無効化する方法
 
-altive_lintsのカスタムルールの内、無効化したいルールがある場合は、以下のようにfalse指定で無効化できます。
+altive_lints のカスタムルールで無効化したいものがあれば、`diagnostics` で `false` を指定します。
 
 ```yaml:analysis_options.yaml
 include: package:altive_lints/altive_lints.yaml
@@ -357,9 +349,7 @@ plugins:
 
 ### ファイルやコード単位でルールをignoreする方法
 
-通常のリントルールと同じく、ラインごとやファイルごとに無効化（ignore）できます。
-
-ただし、 `プラグイン名/ルール名` の形式で指定する必要があります。
+通常の lint と同様に `ignore` コメントも使えますが、`プラグイン名/ルール名` 形式で書きます。
 
 ```dart
 // ignore: altive_lints/prefer_clock_now
@@ -369,20 +359,18 @@ plugins:
 
 複数のプラグインを使っていたら名前の重複もあり得るからですね。
 
-# Analyzer Plugin版 altive_lints プレリリース版公開中
+# Analyzer Plugin版 altive_lints プレリリース公開中
 
-まずはPrerelease版として公開したので、もし良かったら使っていただければ嬉しいです🚀
+まずはプレリリース版として公開しました。ぜひ触ってフィードバックいただけると嬉しいです🚀
 
 [altive_lints 2.0.0-dev.2](https://pub.dev/packages/altive_lints/versions/2.0.0-dev.2)
 
 # おわりに
 
-`Rules` , `Assists` は今回作成できましたが、 `Fixes` タイプは作れなかったので作ってみたいです。
-今回移行した `Rules` の中にも `Fixes` タイプで作れるものがありそうなので挑戦したいです。
-`DateTime.now()` を `clock.now()` に置き換えたり、要素が1つしかない `Column` を削除したり。
+今回の移行で Rules と Assists は一通り移せたものの、`Fixes`（自動修正）はまだ手付かずです。
+`DateTime.now()` を `clock.now()` に差し替えたり、要素が 1 つしかない `Column` をRemoveしたりと、Fixes 化できそうな題材は多いので順次チャレンジ予定です。
 
-Analyzer Pluginを触るのはほぼ初めてだったので、AIに助けてもらい勉強しながら、custom_lint から移行しました。
-今回実装したルールも、より良い書き方が絶対あると思うので改善しながらFixesやAssists含めて追加していきたいです。
+Analyzer Plugin を触るのはほぼ初めてだったため、AI に相談しながら試行錯誤しました。まだ改善できる余地が多いと思うので、引き続き altive_lints を育てていきます。
 
 最後までご覧いただきありがとうございました！😊
 
