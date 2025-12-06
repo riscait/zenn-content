@@ -21,15 +21,16 @@ published: true
 
 この記事では、altive_lints で提供しているカスタムルール／アシストを custom_lint から analysis_server_plugin を使った Analyzer Plugins へ移行した背景と手順をまとめました。
 
-# はじめに
+# ✍️ はじめに
 
 オルティブ株式会社は [altive_lints](https://pub.dev/packages/altive_lints) というリントパッケージを公開しています。
 
 Dart が提供する標準ルールに加えて custom_lint ベースの独自ルールやアシストも同梱していました。どんな内容か簡単に以下にまとめます。
 
-:::details altive_lintsのルールとアシスト一覧
+# 📝 altive_lintsのルールとアシスト一覧
 
-**カスタムリントルール**
+## カスタムリントルール
+
 - `avoid_consecutive_sliver_to_box_adapter`: `SliverToBoxAdapter` の連続使用を避ける。
 - `avoid_hardcoded_color`: ハードコーディングされた `Color` を検出する。
 - `avoid_hardcoded_japanese`: ハードコーディングされた日本語文字列を検出する。
@@ -40,16 +41,21 @@ Dart が提供する標準ルールに加えて custom_lint ベースの独自�
 - `prefer_space_between_elements`: 行間に空行を挟んで読みやすさを保つ。
 - `prefer_to_include_sliver_in_name`: `Sliver` を返す Widget 名に `Sliver` を含める。
 
-**Quick fixで使えるアシスト機能**
+詳しくは弊社小林さんの以下の記事をご覧ください！
+https://zenn.dev/altiveinc/articles/altive-custom-lint
+
+## Quick fixで使えるアシスト機能
 
 - `add_macro_template_documentation`: クラス定義に Macro テンプレート付き Doc コメントを挿入。
 - `add_macro_documentation_comment`: コンストラクタやメソッドに Doc コメントを挿入。
 - `wrap_with_macro_template_documentation_comment`: 既存 Doc コメントを Macro テンプレートで包む。
-:::
+
+詳しくは弊社小林さんの以下の記事をご覧ください！
+https://zenn.dev/altiveinc/articles/dartdoc-macros
 
 今回はこれらのルールとアシスト機能の実装を `custom_lint` から `analysis_server_plugin` に書き換えてみた話です。
 
-# 用語整理
+# 📂 用語整理
 
 | パッケージ名 | レイヤー / 分類 | 実装時の関わり方 |
 | :-- | :-- | :-- |
@@ -62,7 +68,7 @@ Dart が提供する標準ルールに加えて custom_lint ベースの独自�
 呼称が似ていて混乱しやすいので、個人メモとして整理しました。
 :::
 
-# custom_lint から analysis_server_plugin へ移行するかの判断
+# 🤔 custom_lint から analysis_server_plugin へ移行するかの判断
 
 - 新しいAnalyzer Pluginが開発されるときに、「（Analyzer Pluginが）数ヶ月でリリースされるなら custom_lint の積極的な開発に取り掛からない」という発言を見ました。
 その後、「数ヶ月後には公開予定だよ」という旨の返答があったのを見ました。（要出典！）
@@ -72,11 +78,11 @@ analysis_server_plugin製であれば、それは不要です。
 
 こうした背景から、altive_lints も公式プラグインベースへ移行し、依存関係をシンプルに保つ方針に決めました。
 
-# analysis_server_plugin でプラグインを作成する（カスタムルール・アシスト）
+# 📦 analysis_server_plugin でプラグインを作成する（カスタムルール・アシスト）
 
 ここからは、altive_lints のルール／アシストを analysis_server_plugin ベースへ移行する際に実施した手順を順に紹介します。
 
-## 依存パッケージのインストール
+## ① 📥 依存パッケージのインストール
 
 `custom_lint` と `custom_lint_builder` を削除し、 `analysis_server_plugin` などを追加しました。
 
@@ -111,7 +117,7 @@ IDE／CLI 双方で動く静的解析プラグインを公式サーバー上で�
 
 この組み合わせにより、ルールを単体テストに近い書き味で検証できています。
 
-## main.dartでプラグインを作成
+## ② 🔨 main.dart で Plugin を作成
 
 まずは、後ほど作成するルールやアシスト機能を登録する土台となるプラグインを用意します。
 
@@ -140,7 +146,7 @@ class _Plugin extends Plugin {
 }
 ```
 
-## ルール（AnalysisRule）の作成
+## ③ 📏 AnalysisRule の作成
 
 ルールやアシストを登録するためのプラグインは作成できたので、次はルールを作成します。
 
@@ -199,7 +205,7 @@ class _Visitor extends SimpleAstVisitor<void> {
 }
 ```
 
-### プラグインにルールを登録
+### Plugin に 作成した AnalysisRule を登録
 
 作ったルールをプラグインに登録しましょう。
 
@@ -223,7 +229,7 @@ Future<void> register(PluginRegistry registry) async {
 `registerLintRule` に切り替えたところ、使う／使わないを明示できるようになりました。
 :::
 
-### 登録したルールを明示的に有効化する
+### 登録した AnalysisRule を明示的に有効化する
 
 `registerLintRule` で登録すると利用側が明示的に有効化するまで動きません。
 `include: package:altive_lints/altive_lints.yaml` を書くだけで全部使えるようにしたかったので、`altive_lints.yaml` 内で true 指定しています。
@@ -244,9 +250,9 @@ plugins:
       prefer_to_include_sliver_in_name: true
 ```
 
-## アシスト（ResolvedCorrectionProducer）の作成
+## ④ 🫂 Assist （Correction） の作成
 
-次はアシストです。`Quick Fix` メニューに候補が表示され、選択するとコードを挿入したり書き換える機能を提供できます。
+次はアシスト機能の作成です。`Quick Fix` メニューに候補が表示され、選択するとコードを挿入したり書き換える機能を提供できます。
 
 ここでは、コンストラクタやメソッドに Doc コメントを差し込む `add_macro_document_comment` を例にします。
 
@@ -278,7 +284,7 @@ class AddMacroDocumentComment extends ResolvedCorrectionProducer {
 }
 ```
 
-## プラグインにアシストを登録
+### Plugin に Assist を登録
 
 アシストは `registry.registerAssist` で登録します。
 
@@ -293,7 +299,7 @@ Future<void> register(PluginRegistry registry) async {
 
 `registerAssist` は `{required CorrectionProducerContext context}` を受け取るファクトリ関数を渡す仕様なので、アシストクラスのコンストラクタも `context` を受ける形にして `.new` をそのまま渡しました。
 
-## プラグインの有効化
+## ⑤ 💡 Plugin の有効化
 
 [登録したルールを明示的に有効化する](#登録したルールを明示的に有効化する) にて、プラグイン自体も有効化済みですが、
 プラグインを有効化するためには以下の記述が必要なので追加してあります。
@@ -304,9 +310,9 @@ plugins:
     path: ../../altive_lints
 ```
 
-## アプリやパッケージからの利用
+# 🤝 Plugin をアプリやパッケージから利用する方法
 
-### pubspec.yaml に altive_lints を追加
+## pubspec.yaml に altive_lints を追加
 
 ```yaml:pubspec.yaml
 environment:
@@ -318,7 +324,7 @@ dev_dependencies:
 
 custom_lint を直接入れる必要がなくなり、`dev_dependencies` は altive_lints だけで済むようになりました。
 
-### analysis_options.yaml で altive_lints をインクルード
+## ➕ analysis_options.yaml で altive_lints をインクルード
 
 ```yaml:analysis_options.yaml
 include: package:altive_lints/altive_lints.yaml
@@ -334,7 +340,7 @@ plugins:
   altive_lints:
 ```
 
-### ルールを個別に無効化する方法
+## 🔕 ルールを個別に無効化する方法
 
 altive_lints のカスタムルールで無効化したいものがあれば、`diagnostics` で `false` を指定します。
 
@@ -347,7 +353,7 @@ plugins:
       avoid_hardcoded_japanese: false
 ```
 
-### ファイルやコード単位でルールをignoreする方法
+## 🙈 ファイルやコード単位でルールをignoreする方法
 
 通常の lint と同様に `ignore` コメントも使えますが、`プラグイン名/ルール名` 形式で書きます。
 
@@ -359,13 +365,13 @@ plugins:
 
 複数のプラグインを使っていたら名前の重複もあり得るからですね。
 
-# Analyzer Plugin版 altive_lints プレリリース公開中
+# 🚀 Analyzer Plugin版 altive_lints プレリリース公開中
 
 まずはプレリリース版として公開しました。ぜひ触ってフィードバックいただけると嬉しいです🚀
 
 [altive_lints 2.0.0-dev.2](https://pub.dev/packages/altive_lints/versions/2.0.0-dev.2)
 
-# おわりに
+# ✍️ おわりに
 
 今回の移行で Rules と Assists は一通り移せたものの、`Fixes`（自動修正）はまだ手付かずです。
 `DateTime.now()` を `clock.now()` に差し替えたり、要素が 1 つしかない `Column` をRemoveしたりと、Fixes 化できそうな題材は多いので順次チャレンジ予定です。
@@ -374,7 +380,7 @@ Analyzer Plugin を触るのはほぼ初めてだったため、AI に相談し�
 
 最後までご覧いただきありがとうございました！😊
 
-## 関連リンク
+## 📚 関連リンク
 
 ### altive_lints analysis_server_plugin移行プルリクエスト
 
