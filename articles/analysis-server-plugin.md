@@ -24,6 +24,7 @@ published: true
 # ✍️ はじめに
 
 オルティブ株式会社は [altive_lints](https://pub.dev/packages/altive_lints) というリントパッケージを公開しています。
+（LIKEもらえると、とても嬉しいです…！）
 
 Dart が提供する標準ルールに加えて custom_lint ベースの独自ルールやアシストも同梱していました。どんな内容か簡単に以下にまとめます。
 
@@ -319,7 +320,7 @@ environment:
   sdk: ^3.10.0 # altive_lintsを含む Analyzer Plugin の利用には Dart 3.10 以上が必要です。
 
 dev_dependencies:
-  altive_lints: ^2.0.0-dev.2
+  altive_lints: ^2.0.0-dev.3
 ```
 
 custom_lint を直接入れる必要がなくなり、`dev_dependencies` は altive_lints だけで済むようになりました。
@@ -328,22 +329,19 @@ custom_lint を直接入れる必要がなくなり、`dev_dependencies` は alt
 
 ```yaml:analysis_options.yaml
 include: package:altive_lints/altive_lints.yaml
-plugins:
-  altive_lints:
-    version: 2.0.0-dev.2
 ```
 
-~~`altive_lints.yaml` にはプラグイン有効化とルール有効化済みなので、利用側では `include` するだけで OK です~~
+`altive_lints.yaml` にはプラグイン有効化とルール有効化済みなので、利用側では `include` するだけで OK です。
 
 :::message
-includeだけでは有効化されませんでした🙏
-公式ドキュメントでは
+ちなみに、バージョンを指定してpluginを指定する記法として、公式ドキュメントでは
 ```yaml
 plugins:
   my_plugins: ^1.0.0
 ```
 のように記述せよ、と書いていますが、これでは有効になりませんでした🤔
 `version: ^1.0.0` のように書いたら有効化できました✍️
+Issueを起票して確認中：https://github.com/dart-lang/sdk/issues/62188
 :::
 
 ## 🔕 ルールを個別に無効化する方法
@@ -355,7 +353,7 @@ include: package:altive_lints/altive_lints.yaml
 
 plugins:
   altive_lints:
-    version: 2.0.0-dev.2
+    version: 2.0.0-dev.3
     diagnostics:
       avoid_hardcoded_japanese: false
 ```
@@ -376,7 +374,7 @@ plugins:
 
 まずはプレリリース版として公開しました。ぜひ触ってフィードバックいただけると嬉しいです🚀
 
-[altive_lints 2.0.0-dev.2](https://pub.dev/packages/altive_lints/versions/2.0.0-dev.2)
+[altive_lints 2.0.0-dev.3](https://pub.dev/packages/altive_lints/versions/2.0.0-dev.3)
 
 # ✍️ おわりに
 
