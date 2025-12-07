@@ -328,17 +328,23 @@ custom_lint を直接入れる必要がなくなり、`dev_dependencies` は alt
 
 ```yaml:analysis_options.yaml
 include: package:altive_lints/altive_lints.yaml
-```
-
-`altive_lints.yaml` にはプラグイン有効化とルール有効化済みなので、利用側では `include` するだけで OK です。
-
-逆に、Plugin だけ使いたい／設定を細かく書きたい場合は `plugins` セクションに `altive_lints` を追加します。
-
-```yaml:analysis_options.yaml
-include: package:flutter_lints/flutter_lints.yaml
 plugins:
   altive_lints:
+    version: 2.0.0-dev.2
 ```
+
+~~`altive_lints.yaml` にはプラグイン有効化とルール有効化済みなので、利用側では `include` するだけで OK です~~
+
+:::message
+includeだけでは有効化されませんでした🙏
+公式ドキュメントでは
+```yaml
+plugins:
+  my_plugins: ^1.0.0
+```
+のように記述せよ、と書いていますが、これでは有効になりませんでした🤔
+`version: ^1.0.0` のように書いたら有効化できました✍️
+:::
 
 ## 🔕 ルールを個別に無効化する方法
 
@@ -349,6 +355,7 @@ include: package:altive_lints/altive_lints.yaml
 
 plugins:
   altive_lints:
+    version: 2.0.0-dev.2
     diagnostics:
       avoid_hardcoded_japanese: false
 ```
