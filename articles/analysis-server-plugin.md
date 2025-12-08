@@ -238,7 +238,7 @@ Future<void> register(PluginRegistry registry) async {
 ```yaml:altive_lints.yaml
 plugins:
   altive_lints:
-    path: ../../altive_lints
+    version: ^2.0.0-dev.3
     diagnostics:
       avoid_consecutive_sliver_to_box_adapter: true
       avoid_hardcoded_color: true
@@ -250,6 +250,10 @@ plugins:
       prefer_space_between_elements: true
       prefer_to_include_sliver_in_name: true
 ```
+
+:::message
+このとき、 `path` を使った指定を当初使っていたのですが、altive_lints利用側でも `plugins` を描かないとルールが有効にならなかったので `version` を使った指定に変更しました。
+:::
 
 ## ④ 🫂 Assist （Correction） の作成
 
@@ -308,7 +312,7 @@ Future<void> register(PluginRegistry registry) async {
 ```yaml:altive_lints.yaml
 plugins:
   altive_lints:
-    path: ../../altive_lints
+    version: ^2.0.0-dev.3
 ```
 
 # 🤝 Plugin をアプリやパッケージから利用する方法
@@ -368,20 +372,21 @@ plugins:
 // ignore_for_file: altive_lints/prefer_clock_now
 ```
 
-複数のプラグインを使っていたら名前の重複もあり得るからですね。
+複数のプラグインを使っていたら名前の重複もあり得るからですね👍
 
-# 🚀 Analyzer Plugin版 altive_lints プレリリース公開中
+# 🚀 Analyzer Plugin版 altive_lints 公開中
 
-まずはプレリリース版として公開しました。ぜひ触ってフィードバックいただけると嬉しいです🚀
+pub.devで公開中です。ぜひ触ってフィードバックいただけると嬉しいです🚀
 
-[altive_lints 2.0.0-dev.3](https://pub.dev/packages/altive_lints/versions/2.0.0-dev.3)
+[altive_lints](https://pub.dev/packages/altive_lints/versions/2.0.0-dev.3)
 
 # ✍️ おわりに
 
 今回の移行で Rules と Assists は一通り移せたものの、`Fixes`（自動修正）はまだ手付かずです。
 `DateTime.now()` を `clock.now()` に差し替えたり、要素が 1 つしかない `Column` をRemoveしたりと、Fixes 化できそうな題材は多いので順次チャレンジ予定です。
 
-Analyzer Plugin を触るのはほぼ初めてだったため、AI に相談しながら試行錯誤しました。まだ改善できる余地が多いと思うので、引き続き altive_lints を育てていきます。
+Analyzer Plugin を触るのはほぼ初めてだったため、AI に相談しながら試行錯誤しました。
+まだ改善できる余地が多いと思うので、引き続き altive_lints を育てていきます。
 
 最後までご覧いただきありがとうございました！😊
 
